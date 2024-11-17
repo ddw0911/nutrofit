@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>뉴트로핏, 나만을 위한 맛있는 건강함</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta content="Codescandy" name="author">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-M8S4MT3EYG');
+  </script>
+
+  <!-- 구글 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap"
+        rel="stylesheet">
+
+  <!-- Favicon icon-->
+  <link rel="shortcut icon" type="image/x-icon"
+        href="../static/assets/images/favicon/nutrofit-logo-only.png">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+  <!-- Libs CSS -->
+  <link href="../static/assets/libs/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/libs/feather-webfont/dist/feather-icons.css" rel="stylesheet">
+  <link href="../static/assets/libs/simplebar/dist/simplebar.min.css" rel="stylesheet">
+
+
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="../static/assets/css/theme.css">
+  <link rel="stylesheet" href="../static/assets/css/nutrofit-modal.css">
+  <link rel="stylesheet" href="../static/assets/css/nutrofit-login.css">
+  <link rel="stylesheet" href="../static/assets/css/nutrofit-signup.css">
+  <link rel="stylesheet" href="../static/assets/css/nutrofit-main.css">
+
+</head>
+
+<body>
+
+<!-- GNB -->
+<header class="py-lg-5 py-4 px-0 border-bottom border-bottom-lg-0 gnb">
+  <div class="container-fluid">
+    <div class="row w-100 align-items-center g-0 gx-lg-3 gnb-fixed">
+      <div class="col-xxl-9 col-lg-8">
+        <div class="d-flex align-items-center gnb-logo">
+          <a class="navbar-brand d-none d-lg-block" href="../pages/nutrofit.html">
+            <img src="../static/assets/images/logo/nutrofit-logo-leg-nobg.png"
+                 alt="nutrofit logo"
+                 style="width: 75%; height: auto; margin-left: 4rem;">
+          </a>
+        </div>
+      </div>
+      <div class="col-xxl-3 col-lg-4 d-flex align-items-center gnb-right">
+        <!-- 정기구독 버튼 -->
+        <span class="gnb-btn"><button type="submit"><a href="../pages/subscription.html" style="color: black;">정기구독</a></button></span>
+        <!-- 회원가입버튼 -->
+        <span class="gnb-btn"><button type="button"><a href="signup.html"
+                                                                   style="color: black;">회원가입</a></button></span>
+        <div class="list-inline ms-auto d-lg-block d-none gnb-icons">
+          <div class="list-inline-item">
+            <a href="../pages/signin.html" class="text-muted">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round"
+                   class="feather feather-user">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </a>
+          </div>
+          <div class="list-inline-item" style="margin-inline: 20px 20px;">
+            <a class="text-muted position-relative " data-bs-toggle="offcanvas"
+               data-bs-target="#offcanvasRight"
+               href="#offcanvasExample" role="button" aria-controls="offcanvasRight">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round"
+                   class="feather feather-shopping-bag">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+              <span
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+                  style="background-color: #FE4923 !important;">
+                    2
+                    <span class="visually-hidden">itemcount</span>
+                    </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<main>
+  <!-- 정기구독 소개 -->
+
+  <section class="container main-container bg-beige">
+    <div class="my-6 subscription-container">
+      <div class="row">
+        <div class="col-12 offset-lg-1 ">
+          <div class="mb-5">
+            <h3 class="red-100" style="margin-top: 2rem;">정기구독 소개</h3>
+            <p class="margin-20 black-75">원하시는 식단과 제공방법을 선택하시면 뉴트로핏이 '알아서' 메뉴를 엄선하여 배송해드립니다</p>
+          </div>
+          <div class="black-75 margin-20">
+            <p>이런 분들을 위해 준비했어요</p>
+            <ul>
+              <li>메뉴 선택이 고민이신 분</li>
+              <li>완벽히 설계된 영양식사를 원하시는 분</li>
+              <li>다양한 뉴트로핏의 메뉴를 체험해보고 싶으신 분</li>
+            </ul>
+          </div>
+          <div class="black-75 margin-20" style="margin-bottom: 4rem;">
+            <p>상세내용</p>
+            <ul>
+              <li>서비스 상품의 1회 제공 가격은 1인분 기준 <span class="black-100">7,800원</span></li>
+              <li>제품은 신선도 유지를 위해 <span class="black-100">주 3일 배송 (배송비 무료)</span></li>
+              <li>결제 시 <span class="black-100">5% 추가할인</span> 혜택</li>
+              <li>해지 시까지 첫 결제일 기준 <span class="black-100">격주 자동결제</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 플랜설정 -->
+  <section class="container bg-white">
+    <div class="my-6 subscription-container">
+      <!-- row -->
+      <div class="row">
+        <!-- col -->
+        <div class="col-12 offset-lg-1 ">
+          <!-- form -->
+          <div class="signup-items">
+            <h3 class="red-100">플랜 설정</h3>
+          </div>
+          <div class="subscription-plan-select">
+            <!-- 식단 설정 -->
+            <div class="plan-first-container">
+              <h5 class="margin-10">I. 식단 설정</h5>
+              <table class="margin-20 black-75 select-list">
+                <tr>
+                  <th>일반식단</th>
+                  <td>
+                    <button type="submit">건강식</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>영양식단</th>
+                  <td>
+                    <button type="submit">고단백</button>
+                  </td>
+                  <td>
+                    <button type="submit">저탄수화물</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <button type="submit">저염식</button>
+                  </td>
+                  <td>
+                    <button type="submit">채식</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>관리식단</th>
+                  <td>
+                    <button type="submit">다이어트</button>
+                  </td>
+                  <td>
+                    <button type="submit">당뇨</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <button type="submit">고혈압</button>
+                  </td>
+                  <td>
+                    <button type="submit">항암치료</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <!-- 제공방법 설정 -->
+            <div>
+              <h5 class="margin-10">II. 제공방법 설정</h5>
+              <table class="margin-20 black-75 select-list">
+                <tr>
+                  <th>서비스<br>이용기간</th>
+                  <td>
+                    <button type="submit">해지 시까지</button>
+                  </td>
+                  <td>
+                    <button type="submit">2주</button>
+                  </td>
+                  <td>
+                    <button type="submit">1개월</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>일일<br>식사횟수</th>
+                  <td>
+                    <button type="submit">1회</button>
+                  </td>
+                  <td>
+                    <button type="submit">2회</button>
+                  </td>
+                  <td>
+                    <button type="submit">3회</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>인원 수</th>
+                  <td>
+                    <div class="input-group input-spinner updown">
+                      <input type="button" value="-" class="button-minus  btn  btn-sm "
+                             data-field="quantity" style="border-width: 2px;">
+                      <input type="number" step="1" max="10" value="1" name="quantity"
+                             class="quantity-field form-control-sm form-input   "
+                             style="border-style: none;">
+                      <input type="button" value="+" class="button-plus btn btn-sm "
+                             data-field="quantity" style="border-width: 2px;">
+                    </div>
+
+                  </td>
+                  <td colspan="2">
+                    <div class="red-75" style="text-align: left;">2인 이상 3%, 4인 이상 7%할인<br>최대 10인 설정
+                      가능
+                    </div>
+                  </td>
+
+                </tr>
+                <tr>
+                  <th>배송주기</th>
+                  <td>
+                    <button type="submit">월수금</button>
+                  </td>
+                  <td>
+                    <button type="submit">화목토</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 총 금액 계산 -->
+  <section class="container bg-beige">
+    <div class="my-6 subscription-container">
+      <div class="row">
+        <div class="col-12 offset-lg-1 ">
+          <div class="mb-5">
+            <h3 class="red-100" style="padding: 2rem 0 1rem 0;">나의 플랜</h3>
+          </div>
+          <div class="myplan border-bottom">
+            <div class="black-75">
+              <ul class="myplan-check">
+                <li>식단 : 건강식단</li>
+                <li>제공방법</li>
+                <ul class="plan-offer">
+                  <li>서비스 이용기간 : 2주</li>
+                  <li>일일식사횟수 : 2회</li>
+                  <li>인원 수 : 2명</li>
+                  <li>배송주기 : 월수금</li>
+                </ul>
+              </ul>
+            </div>
+            <div class="black-75 margin-20 calculate-payment">
+              <table class="calculate-one">
+                <tr>
+                  <td>배송비 </td>
+                  <td>무료</td>
+                </tr>
+                <tr>
+                  <td>1회 제공 </td>
+                  <td><span class="original-price">7,800원</td>
+                </tr>
+                <tr>
+                  <td><span class="discount-rate">3% 할인</span></td>
+                  <td><span class="discounted-price">7,566원</span></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <div class="calculate-total black-75">
+          <p>결제 예정 금액 : 7,566원 X 14일 X 하루 2회 X 2인 = <span class="original-price">423,696원</span></p>
+          <p><span class="discount-rate" style="padding-right: 0.5rem ;">5% 할인</span><span
+              class="discounted-price">402,511원</span></p>
+        </div>
+      </div>
+  </section>
+
+  <!-- 결제하러가기 & 취소 버튼 -->
+  <section>
+    <div class="my-6 container">
+      <!-- row -->
+      <div class="row">
+        <!-- col -->
+        <div class="col-12 col-md-11 offset-lg-1">
+          <div class="signup-div">
+            <form action="../pages/nutrofit.html" method="get">
+              <button type="submit" class="whitebtn-big">취소</button>
+            </form>
+            <form action="../pages/subscription-checkout.html">
+            <button type="submit" class="redbtn-big">결제하러 가기</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+  <!-- 회원가입 성공 모달 -->
+  <div class="modal fade" id="SignupSuccessModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-msg">
+        <div class="modal-body p-8">
+          <div class="position-absolute top-0 end-0 me-3 mt-3">
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+          </div>
+          <div class="signup-success-message">
+            <h4>회원가입 되셨습니다! 축하드립니다!</h4>
+            <form action="../pages/nutrofit.html" method="post">
+              <button type="submit" class="whitebtn-big margin-10">확인</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 이용약관 모달 -->
+  <div class="modal fade" id="TermsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-8">
+          <div class="position-absolute top-0 end-0 me-3 mt-3">
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+          </div>
+          <div>
+            <table class="terms-privacy">
+              <th><h2 style="margin-bottom: 2rem;">서비스 이용약관</h2></th>
+              <tr>
+                <th>제1조 목적</th>
+                <td>
+                  <ul>
+                    <li>본 약관은 뉴트로핏(이하 “회사”)에서 제공하는 밀키트 및 관련 서비스(이하 “서비스”라 합니다)를 이용함에 있어 회사와 이용자의
+                      권리·의무
+                      및 책임사항을 규정함을 목적으로 합니다.
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <th>제2조 용어 정의</th>
+                <td>
+                  <ol>
+                    <li>“이용자”란 사이에 접속하여 이 약관에 따라 회사가 제공하는 서비스를 받는 회원 및 비회원을 말합니다.</li>
+                    <li> “회원”이라 함은 회사에 개인정보를 제공하여 회원등록을 한 자로서, 회사에서 제공되는 서비스를 지속적으로 이용할 수 있는 자를
+                      말합니다.
+                    </li>
+                    <li> “비회원”이라 함은 회원에 가입하지 않고 회사가 제공하는 ‘일부 서비스’ 를 이용하는 자를 말합니다.</li>
+                    <li>“일부 서비스”라 함은 “장바구니 상품등록, 결제서비스(단품결제 및 정기구독 서비스)를 제외한 “제품검색, 제품상세정보 조회”만 가능한
+                      서비스를 말합니다.
+                    </li>
+                    <li>“밀키트”라 함은 회사가 판매하는 조리법이 포함된 요리 재료 세트를 의미합니다.</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제3조 회원가입</th>
+                <td>
+                  <ol>
+                    <li>회원가입은 만 14세 이상인 자에 한해 가능합니다.</li>
+                    <li>외국인의 경우 외국인등록번호를 사용하여 회원가입이 가능합니다.</li>
+                    <li>회원가입 시 반드시 정확한 정보를 제공해야 하며, 허위정보 제공 시 서비스 이용에 제한이 있을 수 있습니다.</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제4조 개인정보 제공 및 동의</th>
+                <td>
+                  <ol>
+                    <li>회사는 회원가입 및 서비스 제공에 필요한 최소한의 개인정보만을 수집하며, 수집된 정보는 회사의 개인정보 처리방침에 따라 관리됩니다.
+                    </li>
+                    <li>회원은 서비스 이용 시 제공되는 개인정보의 수집 및 이용에 대해 동의해야 하며, 구체적인 개인정보 수집 항목과 이용 목적은 개인정보
+                      처리방침에서 확인할 수 있습니다.
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제5조 이용자의 의무</th>
+                <td>
+                  <ol>
+                    <li>회원은 본 약관 및 관계 법령을 준수하여야 하며, 회사의 정상적인 운영을 방해하는 행위를 해서는 안 됩니다.</li>
+                    <li>회원의 계정 정보는 본인만 사용 가능하며, 이를 타인에게 양도하거나 대여할 수 없습니다.</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제6조 구매 및 결제</th>
+                <td>
+                  <ol>
+                    <li>비회원의 경우 일부 상품 구매에 제한이 있을 수 있습니다.</li>
+                    <li>결제 수단은 결제대행사를 통한 간편결제만 제공됩니다.</li>
+                    <li>회사는 결제 완료 후 송금처리가 이루어진 시점에서만 주문을 확정합니다.</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제7조 배송정책</th>
+                <td>
+                  <ol>
+                    <li>당일 발송상품은 평일 오후 3시 이전 주문에 한해 발송되며, 특정조건에 따라 출고 일정이 변경될 수 있습니다.</li>
+                    <li>배송비는 주문금액 또는 주문상품에 따라 부과됩니다.</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제8조 이용약관의 개정</th>
+                <td>
+                  <ol>
+                    <li>회사는 본 약관을 개정할 수 있으며, 개정 시 회원에게 이메일을 통해 공지합니다.</li>
+                    <li>개정된 약관에 동의하지 않을 경구 회원은 탈퇴를 요청할 수 있으며, 별도 의사표시가 없을 경우 개정된 약관에 동의한 것으로 간주됩니다.
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제9조 책임의 한계</th>
+                <td>
+                  <ol>
+                    <li>회사는 천재지변 또는 이에 준하는 불가항력으로 인해 서비스를 제공할 수 없는 경우 서비스 제공에 대한 책임이 면제됩니다.</li>
+                    <li>회사는 회원의 귀책사유로 인한 서비스 이용 장애에 대해 책임을 지지않습니다.</li>
+                  </ol>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 개인정보 처리방침 -->
+  <div class="modal fade" id="PrivacyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-8">
+          <div class="position-absolute top-0 end-0 me-3 mt-3">
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+          </div>
+          <div>
+            <table class="terms-privacy">
+              <th><h2 style="margin-bottom: 2rem;">개인정보 처리방침</h2></th>
+              <tr>
+                <th>제1조 수집하는 개인정보의 항목</th>
+                <td>
+                  <ol>
+                    <li>필수정보 : 이름(한글 5자, 영문 20자 이내), 아이디(영문,숫자 조합으로 6~20자, 대소문자 구별, 한글,특수문자 사용불가)
+                      비밀번호
+                      (8~20자, 특수문자 포함 필수), 이메일 주소, 생년월일 (yyyyMMdd 형식, 숫자만 입력가능), 성별 (남성/여성 선택),
+                      휴대폰번호(숫자만 입력가능)
+                    </li>
+                    <li>선택정보 : 관심 있는 상품 및 식습관 정보(맞춤형 서비스 제공을 위한 정보)</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제2조 개인정보의 수집 및 이용 목적</th>
+                <td>
+                  <ol>
+                    <li>회사는 수집한 개인정보를 다음과 같은 목적으로 사용합니다:</li>
+                    <li>회원 관리: 회원 식별, 서비스 이용 확인, 불량 회원의 부정 이용 방지</li>
+                    <li>서비스 제공: 맞춤형 밀키트 추천, 제품 배송 및 고객 서비스</li>
+                    <li>마케팅 및 광고: 이벤트 정보 및 맞춤형 서비스 제공, 프로모션 참여 기회 제공</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제3조 개인정보의 보유 및 이용 기간</th>
+                <td>
+                  <ol>
+                    <li>회사는 원칙적으로 회원 탈퇴 시 개인정보를 지체 없이 파기하며, 관련 법령에 따라 필요한 경우 아래와 같이 보유할 수 있습니다:</li>
+                    <li>계약 또는 청약철회에 관한 기록: 5년</li>
+                    <li>대금 결제 및 재화 등의 공급에 관한 기록: 5년</li>
+                    <li>소비자 불만 또는 분쟁 처리에 관한 기록: 3년</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제4조 개인정보의 파기 절차 및 방법</th>
+                <td>
+                  <ol>
+                    <li>파기 절차: 수집된 개인정보는 보유 기간이 경과되거나 처리 목적이 달성된 후 파기됩니다.</li>
+                    <li>파기 방법: 전자적 파일 형태의 정보는 복구 불가능한 기술적 방법을 사용하여 삭제합니다.</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제5조 개인정보의 제3자 제공</th>
+                <td>
+                  <ol>
+                    <li>회사는 법령에 근거하거나 이용자의 동의를 받은 경우에 한해 개인정보를 제3자에게 제공합니다.</li>
+                    <li>법령에 따른 예외적인 경우를 제외하고, 이용자의 사전 동의 없이 개인정보를 외부에 제공하지 않습니다.</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제6조 개인정보 처리 위탁</th>
+                <td>
+                  <ol>
+                    <li>회사는 원활한 서비스 제공을 위해 개인정보 처리 업무를 외부 전문업체에 위탁할 수 있으며, 이 경우 해당 업체에 개인정보 보호 의무를
+                      명확히
+                      규정합니다.
+                    </li>
+                    <li>위탁사: 네이버, 카카오, 토스</li>
+                    <li>위탁 업무 내용: 결제 처리</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제7조 이용자의 권리와 행사 방법</th>
+                <td>
+                  <ol>
+                    <li>이용자는 언제든지 개인정보 열람, 정정, 삭제를 요청할 수 있습니다.</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제8조 개인정보 보호를 위한 기술적/관리적 대책</th>
+                <td>
+                  <ol>
+                    <li>회사는 개인정보의 안전성을 확보하기 위해 다음과 같은 조치를 취합니다:</li>
+                    <li>기술적 조치: 개인정보 암호화, 접근 제어 시스템</li>
+                    <li>관리적 조치: 개인정보 취급 직원의 최소화 및 정기 교육, 내부 관리 계획 수립 및 시행</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <th>제9조 개인정보 처리방침의 개정</th>
+                <td>
+                  <ol>
+                    <li>회사는 개인정보 처리방침을 개정할 수 있으며, 변경된 사항은 이메일 또는 휴대폰번호를 통하여 공지합니다.</li>
+                    <li>변경된 방침에 동의하지 않을 경우 탈퇴할 수 있습니다.</li>
+                  </ol>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <footer class="container">
+    <div class="footers">
+      <span><a href="#" data-bs-toggle="modal" data-bs-target="#TermsModal"><h5
+          style="margin-right: 3.5rem;">이용약관</h5></a></span>
+      <span><a href="#" data-bs-toggle="modal"
+               data-bs-target="#PrivacyModal"><h5>개인정보 처리방침</h5></a></span>
+    </div>
+    <!-- 저작권 표시 -->
+    <div class="footers">
+      <div class="col-md-6"><span class="small text-muted"><h5>Copyright 2024 ©Nutrofit.  All rights reserved.</h5></span>
+      </div>
+    </div>
+    </div>
+  </footer>
+
+  <!-- Javascript-->
+  <!-- Libs JS -->
+  <script src="../static/assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/libs/simplebar/dist/simplebar.min.js"></script>
+
+  <!-- Theme JS -->
+  <script src="../static/assets/js/theme.min.js"></script>
+  <script src="../static/assets/js/vendors/password.js"></script>
+  <script src="../static/assets/js/theme.min.js"></script>
+  <script src="../static/assets/libs/slick-carousel/slick/slick.min.js"></script>
+  <script src="../static/assets/js/vendors/slick-slider copy.js"></script>
+  <script src="../static/assets/libs/tiny-slider/dist/min/tiny-slider.js"></script>
+  <script src="../static/assets/js/vendors/tns-slider.js"></script>
+  <script src="../static/assets/js/vendors/zoom.js"></script>
+  <script src="../static/assets/js/vendors/increment-value.js"></script>
+  <script src="../static/assets/js/vendors/nutrofit-main.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+.cartitem-card {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+}
+
+.cartitem-card img{
+    width:8rem;
+    height: auto;
+    border-radius: 5px;
+}
+
+.cartitem-middle{
+    width:10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.cartitem-right{
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    justify-content: space-around;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+}
+
+.order-item-info-one {
+    display: flex;
+
+}
+
+.orderitem-card{
+    flex: 1; 
+    max-width: 25%;
+}
+
+.order-item-name{
+    flex: 1; 
+    max-width: 40%;
+}
+
+
+.cartitem-right2 {
+    flex: 1.5; 
+    max-width: 35%; 
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem; 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+}
+
+.updown{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cartitem-right div{
+    display: flex;
+    
+    justify-content: right;
+    width: 100%;
+}

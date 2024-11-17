@@ -1,0 +1,144 @@
+.margin-bottom {
+  margin-bottom: 0.5rem;
+}
+
+.signup-items {
+  margin: 1rem 0 2rem;
+  list-style: upper-roman;
+}
+
+.signup-items li::marker {
+  font-size: 1.5em;
+  color: #4c4848;
+}
+
+.approval-items {
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+}
+
+.signup-terms-dropdown {
+  display: flex;
+}
+
+.signup-terms-dropdown th {
+  width: 8rem;
+}
+
+.signup-terms-dropdown li::marker {
+  list-style: none;
+  font-size: 1rem;
+}
+
+.input-required-info {
+  margin: 2rem;
+}
+
+.input-required-info td {
+  vertical-align: center;
+  padding-left: 1rem;
+  height: 3.5rem;
+}
+
+.email-field {
+  width: 20rem;
+}
+
+.select-list {
+  margin: 1rem 0 3rem 1rem;
+  text-align: center;
+}
+
+.select-list button {
+  width: 6rem;
+  height: 2rem;
+  margin: 5px;
+}
+
+.select-list button:hover {
+  background: #fe4923;
+  opacity: 1;
+  color: white;
+}
+
+.signup-div {
+  width: 100%;
+  margin: 1rem;
+}
+
+.signup-div button {
+  float: right;
+  margin: 5px;
+}
+
+.interested-btn.active, .portion-btn.active {
+  background-color: #fe4923;
+  color: white;
+}
+
+.signup-success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.select-list button {
+  width: 6rem;
+  height: 2rem;
+  margin: 5px;
+}
+
+.select-list td {
+  padding-left: 0.5rem;
+}
+
+.subscription-container {
+  margin-left: 4rem;
+}
+
+.plan-first-container {
+  margin-right: 6rem;
+}
+
+.subscription-plan-select {
+  display: flex;
+  flex-direction: row;
+}
+
+.myplan {
+  width: 50rem;
+  font-size: medium;
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+  border-radius: 0;
+}
+
+.myplan-check li {
+  padding: 0 0 1rem 0;
+}
+
+.plan-offer {
+  padding-left: 0;
+}
+
+.plan-offer li {
+  padding: 0 0 0.5rem 0;
+  list-style: none;
+}
+
+.calculate-payment {
+  text-align: right;
+  align-self: flex-end;
+}
+
+.calculate-one td {
+  padding: 0.3rem;
+}
+
+.calculate-total {
+  margin-top: 1rem;
+  padding-right: 10rem;
+  text-align: right;
+}

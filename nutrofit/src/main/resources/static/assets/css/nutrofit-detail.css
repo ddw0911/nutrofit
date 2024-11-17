@@ -1,0 +1,57 @@
+.menu-description{
+    line-height: 2;
+}
+
+.discount-rate{
+    text-align: center;
+}
+
+.select-and-add{
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 3.4rem;
+}
+
+.count{
+    width: 15rem;
+    align-items: center;
+}
+
+.cart-add{
+    width: 15rem;
+    display: flex;
+    justify-content: right;
+}
+
+.main-title{
+    opacity: 0.75;
+    border-bottom: 1px solid;
+    border-color: #d0d0d0;
+    border-radius: 0;
+    
+}
+
+.sub-title{
+    margin : 2rem 0 1.5rem 1rem;
+}
+
+.menu-title {
+    margin-left: 1rem;
+}
+
+.nutritions{
+    margin-top: 1rem;
+}
+
+.nutritions table{
+    margin-left: 1rem;
+}
+
+.nutritions td:nth-child(1){
+    width: 8rem;
+}
+
+.ingredients-and-recipe li{
+    list-style:decimal;
+    margin: 0.25rem;
+}
