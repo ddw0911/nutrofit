@@ -1,0 +1,96 @@
+@media (max-width:1150px){
+    aside{
+        left :20rem;
+    }
+}
+
+.commerce>aside{
+    width: 200px;
+    padding: 1rem 0 2rem 1rem;
+    border-radius: 0;
+    border-right: 1px solid #d0d0d0;
+    margin-right: 3rem;
+}
+
+.commerce{
+    background-color: #F5F2EB;
+    font-weight: bold;
+    margin-top: 6rem;
+    padding: 3rem;
+    margin-left: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    letter-spacing: 1px;
+}
+
+.commerce .title-category{
+    width: inherit;
+    border-radius: 0;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #FE492325;
+}
+
+.commerce .category-menus{
+    display: flex;
+    height: 950px;
+    padding:0 1rem 0 0;
+}
+
+.categories {
+    margin-top: 2.5rem;
+}
+
+.big-category{
+    
+    position: absolute;
+    display: contents; 
+}
+
+.big-category span{
+    position: relative;
+    
+}
+
+.commerce .menus{
+    width: 80%;
+    padding : 2rem 0 2rem 0;
+}
+
+.selected-menu{
+    font-size: 30px;
+}
+
+.menu-description{
+    font-size: large;
+}
+
+#categoryCollapseMenu{
+    display: flex;
+    width: 15rem;
+}
+
+.commerce #categoryCollapseMenu>li{
+    margin: auto;
+    padding: 10px 0 10px 0;
+}
+
+.commerce .menu-special{
+    padding: 0 5rem 2rem 2rem;
+    
+}
+
+.commerce .menu-signature{
+    padding: 0 5rem 2rem 2rem;
+}
+
+.sub-category{
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.menu-preview{
+    margin: 1rem;
+}

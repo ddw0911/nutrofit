@@ -1,0 +1,19 @@
+.terms-privacy{
+    margin: 3rem;
+    background-color:#F5F2EB;
+}
+
+.terms-privacy *{
+    display:table;
+    margin: 0.3rem;
+}
+
+
+
+.terms-privacy li{
+    opacity: 0.5;
+    margin: 0 0 0.25rem 1rem;
+    padding: 0.2rem;
+    list-style-position: inside;
+    list-style: lower-roman;
+}

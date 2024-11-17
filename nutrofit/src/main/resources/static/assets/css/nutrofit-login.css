@@ -1,0 +1,56 @@
+input::-webkit-input-placeholder {
+    color:#FE4923;
+}
+
+.login{
+    width: 1280px;
+    height: 550px;
+}
+
+.login td:nth-child(1){
+    width: 50%;
+}
+
+.login-title{
+    padding: 5rem 0 0 5rem;
+    border-right: 1px;
+}
+
+.login-content{
+    padding: 0 5rem 3rem 6rem;
+}
+
+.btn-signup{
+    margin-top: 2.5rem;
+}
+
+.login-sns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.sns-icon{
+    margin-top: 6rem;
+    
+}
+
+.sns-icon tr{
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+
+.sns-icon td{
+    width: 10rem;
+}
+
+.sns-icon img{
+    width: 4.5rem;
+    height: auto;
+}
+
+.sns-icon button{
+    border-style: none;
+}
