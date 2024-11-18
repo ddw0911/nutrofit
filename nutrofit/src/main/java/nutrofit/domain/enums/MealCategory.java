@@ -5,8 +5,8 @@ public enum MealCategory {
   HIGH_PROTEIN("고단백"),
   LOW_CARB("저탄수화물"),
   LOW_SALT("저염식"),
-  VEGAN("채식"),
   DIET("다이어트"),
+  SENIOR("시니어"),
   DIABETES("당뇨"),
   HIGH_BLOOD_PRESSURE("고혈압"),
   CANCER("항암치료");

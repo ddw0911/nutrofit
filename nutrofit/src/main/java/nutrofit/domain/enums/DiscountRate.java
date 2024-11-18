@@ -1,9 +1,9 @@
 package nutrofit.domain.enums;
 
 public enum DiscountRate {
-  THREE_PERCENT("3%"),
-  FIVE_PERCENT("5%"),
-  SEVEN_PERCENT("7%");
+  THREE_PER("3%"),
+  FIVE_PER("5%"),
+  SEVEN_PER("7%");
 
   private final String percent;
 
