@@ -1,7 +1,7 @@
 package nutrofit.service;
 
 import nutrofit.domain.entity.member.MemberBasic;
-import nutrofit.exceptions.MemberException;
+import nutrofit.exceptions.ExceptionMessage;
 import nutrofit.repository.MemberBasicRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,6 @@ public class LoginService implements UserDetailsService{
   @Override
   public MemberBasic loadUserByUsername(String email) {
     return memberBasicRepository.findByEmail(email).
-        orElseThrow(MemberException.BAD_CREDENTIALS::get);
+        orElseThrow(ExceptionMessage.BAD_CREDENTIALS::get);
   }
 }
