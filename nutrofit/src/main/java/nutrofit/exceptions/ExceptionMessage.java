@@ -1,11 +1,12 @@
 package nutrofit.exceptions;
 
-public enum MemberException {
-  BAD_CREDENTIALS("BAD_CREDENTIALS");
+public enum ExceptionMessage {
+  BAD_CREDENTIALS("BAD_CREDENTIALS"),
+  NOT_FOUNDED("NOT_FOUNDED");
 
   private final String msg;
 
-  MemberException(String msg) {
+  ExceptionMessage(String msg) {
     this.msg=msg;
   }
 
