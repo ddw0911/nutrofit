@@ -20,4 +20,13 @@ public enum MealCategory {
   public String get() {
     return category;
   }
+
+  public static MealCategory getEnum(String category) {
+    for (MealCategory categoryEnum : MealCategory.values()) {
+      if (categoryEnum.category.equals(category)) {
+        return categoryEnum;
+      }
+    }
+    return null;
+  }
 }
