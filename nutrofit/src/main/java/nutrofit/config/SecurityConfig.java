@@ -32,6 +32,7 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/signin"),
                 new AntPathRequestMatcher("/signup"),
                 new AntPathRequestMatcher("/signup/email-duplicate-check"),
+                new AntPathRequestMatcher("/menu/**"),
                 new AntPathRequestMatcher("/subscribe")
             ).permitAll()
             .anyRequest().authenticated())
