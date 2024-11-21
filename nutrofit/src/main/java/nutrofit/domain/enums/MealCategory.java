@@ -1,9 +1,9 @@
 package nutrofit.domain.enums;
 
 public enum MealCategory {
-  HEALTHY("건강"),
+  BALANCE("밸런스"),
   HIGH_PROTEIN("고단백"),
-  LOW_CARB("저탄수화물"),
+  LOW_CARBO("저탄수화물"),
   LOW_SALT("저염식"),
   DIET("다이어트"),
   SENIOR("시니어"),

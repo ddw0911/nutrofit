@@ -78,12 +78,12 @@
 }
 
 .commerce .menu-special{
-    padding: 0 5rem 2rem 2rem;
+    padding: 0 3rem 2rem 2rem;
     
 }
 
 .commerce .menu-signature{
-    padding: 0 5rem 2rem 2rem;
+    padding: 0 3rem 2rem 2rem;
 }
 
 .sub-category{
@@ -91,6 +91,43 @@
     margin-bottom: 0.5rem;
 }
 
-.menu-preview{
-    margin: 1rem;
+.card-product {
+  display: flex;
+  flex-direction: column; /* 카드 내용을 세로로 정렬 */
+  justify-content: space-between; /* 위-아래 간격 균일하게 */
+  height: 100%; /* 부모 컨테이너에서 동일한 높이 적용 */
 }
+
+.product-name {
+  height: 40px;
+  margin:0;
+  text-align: left; /* 텍스트 왼쪽 정렬 */
+  line-height: 1.5; /* 줄 간격 설정 */
+}
+
+.price-cart{
+  height: 40px;
+  display: flex;
+  align-items: center; /* 버튼 세로 정렬 */
+  justify-content: space-between; /* 가격과 버튼 간격 설정 */
+}
+
+.product-slider {
+  display: flex; /* 컨테이너가 수평 정렬을 지원하도록 */
+  align-items: stretch; /* 모든 카드 동일 높이로 */
+  gap: 10px; /* 카드 간격 설정 */
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  justify-content: space-between;
+  height: 100%; /* 카드 전체 높이 균일화 */
+}
+
+.product-image{
+  max-width : 100%;
+  height : auto;
+  border-radius : 5px;
+}
+

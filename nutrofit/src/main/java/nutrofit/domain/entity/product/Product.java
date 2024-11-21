@@ -4,8 +4,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,9 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -27,7 +23,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import nutrofit.domain.enums.DiscountRate;
 import nutrofit.domain.enums.MenuType;
 import nutrofit.domain.enums.ProductImageType;
 import nutrofit.domain.enums.ProductPopularity;
@@ -46,22 +41,23 @@ public class Product {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Embedded
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name="category_id")
   private Category category;
+  @Enumerated(EnumType.STRING)
+  @Column(name="menu_type")
   private MenuType type;
 
   @Enumerated(EnumType.STRING)
   private ProductPopularity popularity;
   private String name;
+  @Column(columnDefinition = "TEXT")
   private String description;
 
   @Min(0)
   private Integer price;
   private String component;
   private String recipe;
-
-  @Enumerated(EnumType.STRING)
-  private DiscountRate discount;
 
   @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
   private Nutrition nutrition;

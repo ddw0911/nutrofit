@@ -2,7 +2,7 @@ package nutrofit.domain.enums;
 
 public enum DeliveryFee {
   FREE("무료"),
-  FEE("2,500원");
+  CHARGED("2,500원");
 
   private final String fee;
 

@@ -3096,7 +3096,7 @@
 
 .bg-primary {
   --fc-bg-opacity: 1;
-  background-color: rgba(var(--fc-primary-rgb), var(--fc-bg-opacity)) !important;
+  background-color: #fe4293 !important;
 }
 
 .bg-secondary {
@@ -16901,6 +16901,10 @@ textarea.form-control-lg {
   overflow: hidden;
   transition: height 0.35s ease;
 }
+
+.collapsing.show{
+  height:auto;
+}
 @media (prefers-reduced-motion: reduce) {
   .collapsing {
     transition: none;
@@ -17945,7 +17949,7 @@ textarea.form-control-lg {
 }
 
 .card-body {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   padding: var(--fc-card-spacer-y) var(--fc-card-spacer-x);
   color: var(--fc-card-color);
 }
@@ -20982,7 +20986,7 @@ textarea.form-control-lg {
 
 .text-bg-danger {
   color: #fff !important;
-  background-color: RGBA(219, 48, 48, var(--fc-bg-opacity, 1)) !important;
+  background-color: #fe4923 !important;
 }
 
 .text-bg-light {

@@ -48,6 +48,8 @@
   <link rel="stylesheet" th:href="@{/assets/css/nutrofit-detail.css}">
   <link rel="stylesheet" th:href="@{/assets/css/nutrofit-modal.css}">
 
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 
 <body>
@@ -262,15 +264,15 @@
   <section class="mt-12 container">
 
     <div><h2 style="text-align: center;">상품 소개</h2></div>
-    <!-- 건강식단 -->
+    <!-- 밸런스식단 -->
     <div class="categories">
 
-      <span class="category-card" onclick="location.href='#item-list'" style="cursor:pointer;">
+      <span class="category-card" onclick="location.href='#item-list'; chooseCategory('BALANCE');" style="cursor:pointer;">
         <span>
           <div class="category-img">
-            <img th:src="@{/assets/images/banner/건강식단.png}" alt="건강식단.png">
+            <img th:src="@{/assets/images/banner/밸런스식단.png}" alt="밸런스식단.png">
           </div>
-            <h4 class="red-75 margin-10">건강식단</h4>
+            <h4 class="red-75 margin-10">밸런스식단</h4>
             <div class="mt-4 mb-5 fs-5">
               <p class="mb-0"><h6 class="black-50">영양적으로 균형잡힌 일반식사</h6></p>
             </div>
@@ -278,7 +280,7 @@
       </span>
 
       <!-- 챌린지식단 -->
-      <span class="category-card" onclick="location.href='#item-list'" style="cursor:pointer;">
+      <span class="category-card" onclick="location.href='#item-list'; chooseCategory('CHALLENGE')" style="cursor:pointer;">
         <span>
           <div class="category-img">
             <img th:src="@{/assets/images/banner/챌린지식단.png}" alt="챌린지식단.png">
@@ -291,7 +293,7 @@
       </span>
 
       <!-- 케어식단 -->
-      <span class="category-card" onclick="location.href='#item-list'" style="cursor:pointer;">
+      <span class="category-card" onclick="location.href='#item-list'; chooseCategory('CARE')" style="cursor:pointer;">
         <span>
           <div class="category-img">
             <img th:src="@{/assets/images/banner/케어식단.png}" alt="케어식단.png">
@@ -316,7 +318,7 @@
         <div class="row">
           <div>
             <!-- heading -->
-            <div class="mb-1 red-100 selected-menu">건강식단</div>
+            <div class="mb-1 red-100 selected-menu">밸런스식단</div>
             <div class="mb-0 black-50 menu-description">영양적으로 균형잡힌 일반식사</div>
 
           </div>
@@ -333,75 +335,98 @@
                 <!-- 카테고리 버튼 -->
 
                 <!-- 식단카테고리 -->
-                <!-- 건강식단 -->
+                <!-- 밸런스식단 -->
                 <ul class="nav nav-category" id="categoryCollapseMenu">
-                  <li class="nav-item w-85 collapsed" data-bs-toggle="collapse"
-                      data-bs-target="#flush-collapseOne" aria-expanded="false"
-                      aria-controls="flush-collapseOne">
-                    <a href="#item-list" class="nav-link">
-                      <h3 class="red-100 big-category">건강식단<span>+</span></h3>
+                  <li class="nav-item w-85 collapsed" id="BALANCE"
+                      data-bs-target="#flush-collapseOne" aria-expanded="false">
+                    <a href="#item-list" class="nav-link" onclick="chooseCategory('BALANCE')">
+                      <h3 class="red-100 big-category">밸런스식단<span>+</span></h3>
                     </a>
-                    <div id="flush-collapseOne" class="smooth-collapse">
+                    <div id="flush-collapseOne" class="collapse collapsing">
                       <div>
                         <ul class="nav flex-column ms-3 margin-10">
                           <!-- nav item -->
-                          <li class="sub-category"><a href="#item-list"><h4 class="black-50">
-                            건강식단</h4>
-                          </a></li>
+                          <li class="sub-category">
+                            <a href="#item-list" onclick="loadCategoryMenu('BALANCE')">
+                              <h4 class="black-50">밸런스</h4>
+                            </a>
+                          </li>
                         </ul>
                       </div>
                     </div>
                   </li>
                   <!-- 챌린지식단 -->
-                  <li class="nav-item w-85 collapsed" data-bs-toggle="collapse"
+                  <li class="nav-item w-85 collapsed" id="CHALLENGE"
                       data-bs-target="#flush-collapseTwo" aria-expanded="false"
                       aria-controls="flush-collapseTwo">
-                    <a href="#item-list" class="nav-link">
+                    <a href="#item-list" class="nav-link" onclick="chooseCategory('CHALLENGE')">
                       <h3 class="red-100 big-category">챌린지식단<span>+</span></h3>
                     </a>
-                    <div id="flush-collapseTwo" class="smooth-collapse">
+                    <div id="flush-collapseTwo" class="collapse smooth-collapse">
                       <div>
                         <ul class="nav flex-column ms-3 margin-10">
                           <!-- nav item -->
-                          <li class="sub-category"><a href="#item-list"><h4 class="black-50">
-                            고단백</h4>
-                          </a></li>
+                          <li class="sub-category">
+                            <a href="#item-list" onclick="loadCategoryMenu('HIGH_PROTEIN')">
+                              <h4 class="black-50">고단백</h4>
+                            </a>
+                          </li>
                           <!-- nav item -->
-                          <li class="sub-category"><a href="#item-list"><h4 class="black-50">
-                            저당</h4></a></li>
+                          <li class="sub-category">
+                            <a href="#item-list" onclick="loadCategoryMenu('LOW_CARBO')">
+                              <h4 class="black-50">저당</h4>
+                            </a>
+                          </li>
                           <!-- nav item -->
-                          <li class="sub-category"><a href="#item-list"><h4 class="black-50">
-                            저염식</h4>
-                          </a></li>
+                          <li class="sub-category">
+                            <a href="#item-list" onclick="loadCategoryMenu('LOW_SALT')">
+                              <h4 class="black-50">저염식</h4>
+                            </a>
+                          </li>
                           <!-- nav item -->
-                          <li class="sub-category"><a href="#item-list"><h4 class="black-50">다이어트</h4>
-                          </a></li>
+                          <li class="sub-category">
+                            <a href="#item-list" onclick="loadCategoryMenu('DIET')">
+                              <h4 class="black-50">다이어트</h4>
+                            </a>
+                          </li>
                         </ul>
                       </div>
                     </div>
                   </li>
                   <!-- 케어식단 -->
-                  <li class="nav-item w-85 collapsed" data-bs-toggle="collapse"
+                  <li class="nav-item w-85 collapsed" id="CARE"
                       data-bs-target="#flush-collapseThree" aria-expanded="false"
                       aria-controls="flush-collapseThree">
-                    <a href="#item-list" class="nav-link">
+                    <a href="#item-list" class="nav-link" onclick="chooseCategory('CARE')">
                       <h3 class="red-100 big-category">케어식단<span>+</span></h3>
                     </a>
-                    <div id="flush-collapseThree" class="smooth-collapse">
+                    <div id="flush-collapseThree" class="collapse smooth-collapse">
                       <div>
                         <ul class="nav flex-column ms-3 margin-10">
                           <!-- nav item -->
-                          <li class="sub-category"><a href="#item-list"><h4 class="black-50">
-                            시니어</h4></a></li>
+                          <li class="sub-category">
+                            <a href="#item-list" onclick="loadCategoryMenu('SENIOR')">
+                              <h4 class="black-50">시니어</h4>
+                            </a>
+                          </li>
                           <!-- nav item -->
-                          <li class="sub-category"><a href="#item-list"><h4 class="black-50">당뇨</h4>
-                          </a></li>
+                          <li class="sub-category">
+                            <a href="#item-list" onclick="loadCategoryMenu('DIABETES')">
+                              <h4 class="black-50">당뇨</h4>
+                            </a>
+                          </li>
                           <!-- nav item -->
-                          <li class="sub-category"><a href="#item-list"><h4 class="black-50">
-                            고혈압</h4></a></li>
+                          <li class="sub-category">
+                            <a href="#item-list" onclick="loadCategoryMenu('HIGH_BLOOD_PRESSURE')">
+                              <h4 class="black-50">고혈압</h4>
+                            </a>
+                          </li>
                           <!-- nav item -->
-                          <li class="sub-category"><a href="#item-list"><h4 class="black-50">
-                            항암치료</h4></a></li>
+                          <li class="sub-category">
+                            <a href="#item-list" onclick="loadCategoryMenu('CANCER')">
+                              <h4 class="black-50">항암치료</h4>
+                            </a>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -411,6 +436,7 @@
             </div>
           </div>
         </aside>
+
         <div class="container menus">
 
           <!-- 선택식단 메뉴리스트 -->
@@ -418,834 +444,61 @@
           <div class="menu-special">
             <h5 class="mb-1 red-75">특별메뉴</h5>
             <p class="mb-0 black-50 menu-description">"매일 바뀌는 오늘의 메뉴"</p>
-            <div class="menu-preview product-slider">
-
-              <!-- 특별제품 미리보기 -->
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="product-slider" id="specialMenuList">
             </div>
           </div>
+
           <!-- 시그니쳐메뉴 -->
           <div class="menu-signature">
             <h5 class="mb-1 red-75">시그니쳐메뉴</h5>
             <p class="mb-0 black-50 menu-description">"뉴트로핏의 대표 메뉴"</p>
-            <div class="menu-preview product-slider">
-
-              <!-- 시그니쳐제품 미리보기 -->
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <!-- 클릭 시 상세보기 -->
-                <div class="card card-product ">
-                  <div class="card-body">
-                    <!-- 뱃지 -->
-                    <div class="text-center position-relative ">
-                      <div class=" position-absolute top-2 start-3">
-                        <span class="badge bg-danger">Hot</span>
-                      </div>
-                      <!-- 미리보기 사진 -->
-                      <img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                           alt="새우팟퐁커리.jpg"
-                           class="mb-3 img-fluid">
-                      <div class="card-product-action">
-                        <a href="#!" class="btn-action" data-bs-toggle="modal"
-                           data-bs-target="#quickViewModal"><i
-                            class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
-                      </div>
-                    </div>
-                    <!-- 제품정보 -->
-
-                    <div class="text-small mb-1 text-decoration-none text-muted"><small>건강식단</small>
-                    </div>
-                    <h2 class="fs-6 text-inherit text-decoration-none">새우팟퐁커리</h2>
-
-                    <!-- 가격 -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <div><span class="text-dark">7,900원</span>
-                      </div>
-                      <!-- 장바구니 담기 버튼 -->
-                      <button type="submit" onclick="addToCart()" class="btn btn-primary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="feather feather-plus">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        담기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="product-slider" id="signatureMenuList">
             </div>
           </div>
         </div>
+        <template id="menuSlider">
+          <div class="card card-product">
+            <div class="card-body">
+              <!-- 뱃지 -->
+              <div class="text-center position-relative">
+                <div class="position-absolute top-2 start-3 badge-container" style="display:none">
+                  <span class="badge bg-danger product-popularity"></span>
+                </div>
+                <!-- 미리보기 사진 -->
+                <img class="mb-3 product-image" src="" alt="">
+                <div class="card-product-action">
+                  <a href="#!" class="btn-action" data-bs-toggle="modal"
+                     data-bs-target="#quickViewModal"><i
+                      class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
+                </div>
+              </div>
+              <!-- 제품정보 -->
+              <!-- 카테고리 -->
+              <div class="text-small mb-1 text-decoration-none text-muted">
+                <small class="product-category"></small>
+              </div>
+              <!-- 제품명 -->
+              <h2 class="product-name fs-6 text-inherit text-decoration-none"></h2>
+
+              <!-- 가격 -->
+              <div class="d-flex justify-content-between align-items-center mt-3 price-cart">
+                <div><span class="product-price text-dark"></span></div>
+                <!-- 장바구니 담기 버튼 -->
+                <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                       viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                       stroke-linejoin="round"
+                       class="feather feather-plus">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  담기
+                </button>
+              </div>
+            </div>
+          </div>
+        </template>
       </div>
     </div>
   </section>
@@ -1438,7 +691,7 @@
           <!-- 제품 수량선택 및 재료,레시피 -->
           <div class="col-lg-6" style="padding: 0 3rem 0 3rem;">
             <div>
-              <h4 class="red-100 margin-tb-10">건강식단</h4>
+              <h4 class="red-100 margin-tb-10">밸런스식단</h4>
               <h2 style="margin: 2rem 0 2rem 0;">새우팟퐁커리 세트</h2>
               <div class="mb-4">
 
@@ -1806,6 +1059,7 @@
 <script th:src="@{/assets/js/vendors/zoom.js}"></script>
 <script th:src="@{/assets/js/vendors/increment-value.js}"></script>
 <script th:src="@{/assets/js/vendors/nutrofit-main.js}"></script>
+<script th:src="@{/assets/js/vendors/nutrofit-commerce.js}"></script>
 
 
 </body>

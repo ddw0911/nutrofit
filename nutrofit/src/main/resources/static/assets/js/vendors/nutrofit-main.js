@@ -61,14 +61,6 @@ function scrollToItemList() {
   requestAnimationFrame(animateScroll); // 애니메이션 시작
 }
 
-// 로그인 후 - 나의정보 확인 (popover)
-document.addEventListener('DOMContentLoaded', function () {
-    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    popoverTriggerList.forEach(function (popoverTriggerEl) {
-        new bootstrap.Popover(popoverTriggerEl);
-    });
-});
-
 //결제 동의 체크박스
 document
   .getElementById("pay-button")

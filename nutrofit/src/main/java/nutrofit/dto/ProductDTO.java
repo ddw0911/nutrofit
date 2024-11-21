@@ -9,8 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import nutrofit.domain.entity.product.Product;
 import nutrofit.domain.entity.product.ProductImage;
-import nutrofit.domain.enums.DiscountRate;
-import nutrofit.domain.enums.MenuType;
 import nutrofit.domain.enums.ProductPopularity;
 
 @Data
@@ -20,7 +18,7 @@ import nutrofit.domain.enums.ProductPopularity;
 public class ProductDTO {
   private Long id;
   private String category;
-  private MenuType type;
+  private String type;
   private ProductPopularity popularity;
   private String name;
   private String description;
@@ -28,20 +26,20 @@ public class ProductDTO {
   private int price;
   private String component;
   private String recipe;
-  private DiscountRate discount;
-  private List<String> images;
+
+  private List<String> imageUrl;
 
   public ProductDTO(Product product) {
     this.id = product.getId();
     this.category = product.getCategory().getCategory().get();
+    this.type = product.getType().get();
     this.popularity = product.getPopularity();
     this.name = product.getName();
     this.description = product.getDescription();
     this.price = product.getPrice();
     this.component = product.getComponent();
     this.recipe = product.getRecipe();
-    this.discount = product.getDiscount();
-    this.images = product.getImages().stream()
+    this.imageUrl = product.getImages().stream()
         .map(ProductImage::getUrl)
         .collect(Collectors.toList());
   }

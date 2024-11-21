@@ -1,5 +1,6 @@
 package nutrofit.dto;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,5 +14,6 @@ import nutrofit.domain.enums.MealCategory;
 public class CategoryDTO {
   private Long id;
   private MealCategory category;
-  private String description;
+  @Column(name="description")
+  private String categoryDescription;
 }

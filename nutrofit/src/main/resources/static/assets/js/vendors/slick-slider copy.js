@@ -48,54 +48,6 @@ if ($('.category-slider').length) {
 
   }
 
-
-
-  // product slider
-
-  if ($('.product-slider').length) {
-    $('.product-slider').slick({
-      infinite: true,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      autoplay: true,
-      dots: false,
-      arrows: true,
-      prevArrow: '<button class="slick-prev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg></button>',
-      nextArrow: '<button class="slick-next"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></button>',
-      responsive: [{
-          breakpoint: 1400,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-
-          }
-        },
-        {
-          breakpoint: 820,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-
-          }
-        }
-        // You can unslick at a given breakpoint now by adding:
-        // settings: "unslick"
-        // instead of a settings object
-      ]
-
-    });
-
-  }
-
-
-
   // team slider
 
   if ($('.team-slider').length) {

@@ -4,12 +4,6 @@
     margin:0 auto;
 }
 
-.smooth-collapse{
-    height: 0;
-    overflow: hidden;
-    transition: height ease-in-out 0.2s;
-}
-
 .nav-item[aria-expanded="true"] .smooth-collapse {
     height: auto;
 }

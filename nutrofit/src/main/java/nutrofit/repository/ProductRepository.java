@@ -6,11 +6,12 @@ import nutrofit.domain.entity.product.Product;
 import nutrofit.domain.enums.MealCategory;
 import nutrofit.domain.enums.MenuType;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-  Optional<Product> findByProductId(Long id);
+  Optional<Product> findById(Long id);
 
-  Optional<List<Product>> findByCategory_categoryAndMenuType(MealCategory category, MenuType type);
+  Optional<List<Product>> findByCategory_categoryAndType(MealCategory category, MenuType type);
 }

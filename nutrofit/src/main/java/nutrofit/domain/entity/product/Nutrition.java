@@ -11,13 +11,15 @@ import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Table(name="nutrition")
 @Data
-@ToString(exclude = "{product}")
+@ToString
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Nutrition {
 
