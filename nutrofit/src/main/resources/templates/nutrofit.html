@@ -312,17 +312,21 @@
     <div class="commerce container main-container">
 
       <!-- 카테고리 사이드바 -->
+      <!-- 카테고리 타이틀 및 설명 템플릿-->
+      <template id="category-title-template">
+        <div class="title-category">
+          <!-- row -->
+          <div class="row">
+            <div>
+              <!-- heading -->
+              <div class="mb-1 red-100 selected-menu" id="category-name"></div>
+              <div class="mb-0 black-50 menu-description" id="category-description"></div>
 
-      <div class="title-category">
-        <!-- row -->
-        <div class="row">
-          <div>
-            <!-- heading -->
-            <div class="mb-1 red-100 selected-menu">밸런스식단</div>
-            <div class="mb-0 black-50 menu-description">영양적으로 균형잡힌 일반식사</div>
-
+            </div>
           </div>
         </div>
+      </template>
+      <div id="category-title">
       </div>
       <div class="category-menus">
         <aside class="categories">

@@ -65,7 +65,7 @@ async function initializeSlider(containerId) {
 }
 
 // 메뉴 렌더링
-async function renderMenu(menuType, containerId) {
+async function renderCategoryMenu(menuType, containerId) {
   const container = document.getElementById(containerId);
   const template = document.getElementById('menuSlider');
 
@@ -115,6 +115,29 @@ async function renderMenu(menuType, containerId) {
   isFirstRender = false;
 }
 
+// 카테고리 타이틀 로드
+async function renderCategoryInfo(categoryInfo, containerId){
+
+  const container = document.getElementById(containerId);
+  const template = document.getElementById('category-title-template');
+
+    container.innerHTML = '';
+
+      const clone = template.content.cloneNode(true);
+
+      // 데이터 바인딩
+      try{
+        clone.querySelector('#category-name').textContent= categoryInfo.category;
+        clone.querySelector('#category-description').textContent = categoryInfo.categoryDescription;
+        console.log('카테고리 데이터 바인딩 성공')
+      } catch (error) {
+        console.error('카테고리 데이터 바인딩 실패:', error)
+      }
+
+
+      container.appendChild(clone);
+}
+
 // 카테고리 메뉴 로드
 async function loadCategoryMenu(category) {
   try {
@@ -122,8 +145,9 @@ async function loadCategoryMenu(category) {
     console.log(`"${category}" 데이터 로드 완료:`, response.data);
 
     // 기존 데이터를 제거한 후 새 데이터 렌더링
-    await renderMenu(response.data.special, 'specialMenuList');
-    await renderMenu(response.data.signature, 'signatureMenuList');
+    await renderCategoryInfo(response.data.categoryInfo, 'category-title');
+    await renderCategoryMenu(response.data.special, 'specialMenuList');
+    await renderCategoryMenu(response.data.signature, 'signatureMenuList');
   } catch (error) {
     console.error('메뉴 데이터를 불러오는 중 오류 발생:', error);
   }
@@ -133,7 +157,3 @@ async function loadCategoryMenu(category) {
 document.addEventListener('DOMContentLoaded', () => {
   loadCategoryMenu('BALANCE'); // 초기 카테고리 로드
 });
-
-
-
-

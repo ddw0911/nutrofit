@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nutrofit.domain.enums.MealCategory;
+import nutrofit.domain.entity.product.Category;
 
 @Data
 @AllArgsConstructor
@@ -13,7 +13,13 @@ import nutrofit.domain.enums.MealCategory;
 @Builder
 public class CategoryDTO {
   private Long id;
-  private MealCategory category;
+  private String category;
   @Column(name="description")
   private String categoryDescription;
+
+  public CategoryDTO(Category category){
+    this.id = category.getId();
+    this.category = category.getCategory().get();
+    this.categoryDescription = category.getCategoryDescription();
+  }
 }
