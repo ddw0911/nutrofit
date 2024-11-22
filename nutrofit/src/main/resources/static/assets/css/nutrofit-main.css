@@ -253,6 +253,10 @@ button{
     justify-content: right;
 }
 
+.pre-line{
+  white-space : pre-line;
+}
+
 .redbtn-big{
     border-style: none;
     background-color: #FE4923;

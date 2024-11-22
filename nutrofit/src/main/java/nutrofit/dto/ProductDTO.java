@@ -26,6 +26,7 @@ public class ProductDTO {
   private int price;
   private String component;
   private String recipe;
+  private NutritionDTO nutrition;
 
   private List<String> imageUrl;
 
@@ -39,6 +40,7 @@ public class ProductDTO {
     this.price = product.getPrice();
     this.component = product.getComponent();
     this.recipe = product.getRecipe();
+    this.nutrition = new NutritionDTO(product.getNutrition());
     this.imageUrl = product.getImages().stream()
         .map(ProductImage::getUrl)
         .collect(Collectors.toList());

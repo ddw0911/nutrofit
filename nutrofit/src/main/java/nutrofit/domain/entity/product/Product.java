@@ -30,7 +30,7 @@ import nutrofit.domain.enums.ProductPopularity;
 @Entity
 @Table(name = "product")
 @Data
-@ToString(exclude = {"nutrition"})
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

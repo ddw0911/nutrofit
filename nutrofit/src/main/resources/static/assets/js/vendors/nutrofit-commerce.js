@@ -1,4 +1,5 @@
 let isFirstRender = true;
+let allProducts = [];
 
 // 상품소개 카드 클릭 시 화면 이동 후 카테고리 드롭다운
 function chooseCategory(category) {
@@ -96,6 +97,7 @@ async function renderCategoryMenu(menuType, containerId) {
     clone.querySelector('.product-name').textContent = menu.name;
     clone.querySelector('.product-price').textContent = `${menu.price}원`;
     clone.querySelector('.product-category').textContent = menu.category;
+    clone.querySelector('.btn-action').setAttribute('data-id', menu.id); // 제품 ID 설정
 
     container.appendChild(clone);
   });
@@ -133,8 +135,6 @@ async function renderCategoryInfo(categoryInfo, containerId){
       } catch (error) {
         console.error('카테고리 데이터 바인딩 실패:', error)
       }
-
-
       container.appendChild(clone);
 }
 
@@ -144,6 +144,9 @@ async function loadCategoryMenu(category) {
     const response = await axios.get(`/menu/${category}`);
     console.log(`"${category}" 데이터 로드 완료:`, response.data);
 
+    allProducts = response.data.special.concat(response.data.signature);
+    console.log(allProducts);
+
     // 기존 데이터를 제거한 후 새 데이터 렌더링
     await renderCategoryInfo(response.data.categoryInfo, 'category-title');
     await renderCategoryMenu(response.data.special, 'specialMenuList');
@@ -152,6 +155,76 @@ async function loadCategoryMenu(category) {
     console.error('메뉴 데이터를 불러오는 중 오류 발생:', error);
   }
 }
+
+// 제품 상세 정보를 모달에 렌더링 후 띄우는 함수
+function viewProductDetailsModal(product) {
+  // 모달 요소를 선택하고 데이터를 업데이트
+
+  document.getElementById('product-preview-image').src = product.imageUrl[0];
+  document.getElementById('product-preview-image').alt = `${product.name} 미리보기 이미지`;
+  document.getElementById('product-compo-image').src = product.imageUrl[1];
+  document.getElementById('product-compo-image').alt = `${product.name} 구성품 이미지`;
+  document.getElementById('product-ingre-image').src = product.imageUrl[2];
+  document.getElementById('product-ingre-image').alt = `${product.name} 재료 이미지`;
+
+  document.getElementById('zoom-preview').style.backgroundImage = `url('${product.imageUrl[0]}')`;
+  document.getElementById('zoom-compo').style.backgroundImage = `url('${product.imageUrl[1]}')`;
+  document.getElementById('zoom-ingre').style.backgroundImage = `url('${product.imageUrl[2]}')`;
+
+  document.getElementById('thumbnails-preview-image').src = product.imageUrl[0];
+  document.getElementById('thumbnails-preview-image').alt = `${product.name} 미리보기 이미지`;
+  document.getElementById('thumbnails-compo-image').src = product.imageUrl[1];
+  document.getElementById('thumbnails-compo-image').alt = `${product.name} 구성품 이미지`;
+  document.getElementById('thumbnails-ingre-image').src = product.imageUrl[2];
+  document.getElementById('thumbnails-ingre-image').alt = `${product.name} 재료 이미지`;
+
+  document.getElementById('calories').textContent = `${product.nutrition.calories} kcal`;
+  document.getElementById('carbo').textContent = `${product.nutrition.carbo} g`;
+  document.getElementById('protein').textContent = `${product.nutrition.protein} g`;
+  document.getElementById('saturatedFat').textContent = `${product.nutrition.saturatedFat} g`;
+  document.getElementById('transFat').textContent = `${product.nutrition.transFat} g`;
+  document.getElementById('cholesterol').textContent = `${product.nutrition.cholesterol} mg`;
+  document.getElementById('sodium').textContent = `${product.nutrition.sodium} mg`;
+
+  document.getElementById('modal-product-category').textContent = product.category;
+  document.getElementById('modal-product-name').textContent = product.name;
+  document.getElementById('modal-product-description').textContent = product.description;
+  document.getElementById('modal-product-price').textContent = `${product.price}원`;
+  document.getElementById('modal-product-compo').textContent = product.component;
+  document.getElementById('modal-product-recipe').textContent = product.recipe;
+
+
+  // 모달 띄우기
+  const quickViewModal = new bootstrap.Modal(document.getElementById('quickViewModal'));
+  quickViewModal.show();
+}
+
+// 모달 초기화
+document.getElementById('quickViewModal').addEventListener('hidden.bs.modal', function () {
+  // 백드롭 요소 제거
+  const backdrop = document.querySelector('.modal-backdrop');
+  if (backdrop) {
+    backdrop.parentNode.removeChild(backdrop);
+  }
+  // body 스타일 초기화
+  document.body.style.overflow = '';
+});
+
+
+
+// 제품 카드에서 상세 정보 보기를 클릭할 때
+function openProductDetailsModal(button) {
+  const productId = button.getAttribute('data-id');
+  console.log(`제품번호 : ${productId}`);
+  const product = allProducts.find(p => p.id === parseInt(productId));
+  if (product) {
+    viewProductDetailsModal(product);
+    console.log(`${product} 제품 데이터 로드 성공`);
+  } else{
+    console.log(`${product} 제품 데이터 로드 실패`);
+  }
+}
+
 
 // 초기 실행
 document.addEventListener('DOMContentLoaded', () => {

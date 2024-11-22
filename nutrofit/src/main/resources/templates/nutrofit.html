@@ -442,7 +442,6 @@
         </aside>
 
         <div class="container menus">
-
           <!-- 선택식단 메뉴리스트 -->
           <!-- 특별메뉴 -->
           <div class="menu-special">
@@ -471,9 +470,10 @@
                 <!-- 미리보기 사진 -->
                 <img class="mb-3 product-image" src="" alt="">
                 <div class="card-product-action">
-                  <a href="#!" class="btn-action" data-bs-toggle="modal"
-                     data-bs-target="#quickViewModal"><i
-                      class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></a>
+                  <!-- 제품상세정보 버튼 -->
+                  <button type="button" onclick="openProductDetailsModal(this)" data-id="${product.id}" class="btn-action" style="border-style: none;"
+                          data-bs-toggle="modal" data-bs-target="#quickViewModal">
+                    <i class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></button>
                 </div>
               </div>
               <!-- 제품정보 -->
@@ -539,7 +539,7 @@
           class="position-absolute top-0 start-100 translate-middle badge-big rounded-pill bg-success"
           style="background-color: #FE4923 !important;">
             2
-            <span class="visually-hidden">itemcount</span>
+            <span class="visually-hidden">itemCount</span>
       </span>
     </a>
   </div>
@@ -560,7 +560,7 @@
 <!-- 메시지 박스 -->
 <div id="cart-message" class="cart-message">상품을 장바구니에 담았습니다!</div>
 
-<!-- 제품상세정보 -->
+<!-- 제품상세정보 모달 -->
 <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content">
@@ -573,82 +573,42 @@
               aria-label="Close"
           ></button>
         </div>
+
         <div class="row">
           <!-- 왼쪽 (제품사진 및 영양정보) -->
           <div class="col-lg-6">
-            <!-- 제품사진 -->
+            <!-- 모달제품사진 -->
             <div class="product productModal" id="productModal">
-              <div
-                  class="zoom"
-                  onmousemove="zoom(event)"
-                  th:style="|background-image: url(@{/assets/images/products/prawncurry-preview.jpg})|"
-              >
-
-                <!-- img -->
-                <img
-                    th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                    alt=""
-                >
+              <div class="zoom" onmousemove="zoom(event)" id="zoom-preview" >
+                <img id="product-preview-image" src="" alt="">
               </div>
-              <div>
-                <div
-                    class="zoom"
-                    onmousemove="zoom(event)"
-                    th:style="|background-image: url(@{/assets/images/products/prawncurry-compo.png})|"
-                >
-
-
-                  <!-- img -->
-                  <img
-                      th:src="@{/assets/images/products/prawncurry-compo.png}"
-                      alt=""
-                  >
-                </div>
+              <div class="zoom" onmousemove="zoom(event)" id="zoom-compo" >
+                <img id="product-compo-image" src="" alt="">
               </div>
-              <div>
-                <div
-                    class="zoom"
-                    onmousemove="zoom(event)"
-                    th:style="|background-image: url(@{/assets/images/products/prawncurry-ingre.png})|"
-                >
-
-
-                  <!-- img -->
-                  <img
-                      th:src="@{/assets/images/products/prawncurry-ingre.png}"
-                      alt=""
-                  >
-                </div>
+              <div class="zoom" onmousemove="zoom(event)" id="zoom-ingre" >
+                <img id="product-ingre-image" src="" alt="">
               </div>
             </div>
+
             <!-- 제품 작은 썸네일 사진 -->
             <div class="product-tools">
               <div class="thumbnails row g-3" id="productModalThumbnails">
                 <div class="col-3">
                   <div class="thumbnails-img">
                     <!-- 미리보기 사진 -->
-                    <img
-                        th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                        alt=""
-                    >
+                    <img id="thumbnails-preview-image" src="" alt="">
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="thumbnails-img">
                     <!-- 구성품사진 -->
-                    <img
-                        th:src="@{/assets/images/products/prawncurry-compo.png}"
-                        alt=""
-                    >
+                    <img id="thumbnails-compo-image" src="" alt="">
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="thumbnails-img">
                     <!-- 재료사진 -->
-                    <img
-                        th:src="@{/assets/images/products/prawncurry-ingre.png}"
-                        alt=""
-                    >
+                    <img id="thumbnails-ingre-image" src="" alt="">
                   </div>
                 </div>
               </div>
@@ -662,31 +622,31 @@
                 <table>
                   <tr>
                     <td>열량</td>
-                    <td>630kcal</td>
+                    <td id="calories"></td>
                   </tr>
                   <tr>
                     <td>당류</td>
-                    <td>12g</td>
+                    <td id="carbo"></td>
                   </tr>
                   <tr>
                     <td>단백질</td>
-                    <td>20g</td>
+                    <td id="protein"></td>
                   </tr>
                   <tr>
                     <td>포화지방</td>
-                    <td>13g</td>
+                    <td id="saturatedFat"></td>
                   </tr>
                   <tr>
                     <td>트랜스지방</td>
-                    <td>0.4g</td>
+                    <td id="transFat"></td>
                   </tr>
                   <tr>
                     <td>콜레스테롤</td>
-                    <td>140mg</td>
+                    <td id="cholesterol"></td>
                   </tr>
                   <tr>
                     <td>나트륨</td>
-                    <td>1,100mg</td>
+                    <td id="sodium"></td>
                   </tr>
                 </table>
               </div>
@@ -695,21 +655,18 @@
           <!-- 제품 수량선택 및 재료,레시피 -->
           <div class="col-lg-6" style="padding: 0 3rem 0 3rem;">
             <div>
-              <h4 class="red-100 margin-tb-10">밸런스식단</h4>
-              <h2 style="margin: 2rem 0 2rem 0;">새우팟퐁커리 세트</h2>
+              <h4 id="modal-product-category" class="red-100 margin-tb-10"></h4>
+              <h2 id="modal-product-name" style="margin: 2rem 0 2rem 0;"></h2>
               <div class="mb-4">
 
               </div>
               <div>
-                <h6 class="black-50 menu-description">이국적인 풍미의 태국식 커리, 새우팟퐁커리를 소개합니다. 태국식 옐로우 커리소스에는
-                  코코넛 밀크를 넣어 더욱 부드러운데요. 커리 소스에는 통통한 새우를 그대로 담아내고, 몽글몽글한 계란을 넣어 부드러운 식감을
-                  더했어요.<br>여기에 입안을 상큼하게 만들어줄 포크샐러드를 준비했어요. 무절임&파인애플, 망고 드레싱까지 곁들이면 태국 현지에서
-                  먹는듯한 한 끼 식사가 완성됩니다.</h6>
+                <h6 id="modal-product-description" class="black-50 menu-description pre-line"></h6>
               </div>
               <hr class="my-6">
               <!-- 1회제공량(식사인원) -->
               <div class="mb-4">
-                <table class="">
+                <table>
                   <!-- 할인율 -->
                   <tr class="discount-rate">
                     <td></td>
@@ -741,8 +698,8 @@
                          data-field="quantity" style="border-width: 2px;">
                 </span>
                 <span class="cart-add">
-                  <span style="margin: 10px 2rem 0 10px;"><h5>8,900원</h5></span>
-                  <form action="#"><button type="submit" onclick="addToCart()" class="redbtn-big">
+                  <span style="margin: 10px 2rem 0 10px;"><h5 id="modal-product-price"></h5></span>
+                  <form action="/cart"><button type="submit" onclick="addToCart()" class="redbtn-big">
                   장바구니 담기
                   </button></form>
                 </span>
@@ -754,50 +711,16 @@
 
                 <div class="black-50">
                   <div class="sub-title">재료(구성품)정보</div>
-                  <ul>
-                    <li>새우팟퐁커리 - 생새우 3마리, 옐로우 커리소스 1팩</li>
-                    <li>시금치볶음밥 팩 - 시금치 1팩, 볶음밥(반조리) 1팩</li>
-                    <li>돼지고기볶음 팩 - 돼지고기볶음(반조리) 1팩, 야채 1팩</li>
-                    <li>무절임&파인애플 팩</li>
-                    <li>하루 비타민 샐러드& 드레싱 팩</li>
-                  </ul>
+                  <div id="modal-product-compo" class="pre-line"></div>
                 </div>
                 <div class="black-50">
                   <div class="sub-title">레시피 정보</div>
-                  <div>
-                    <div class="menu-title"># 새우팟퐁커리</div>
-                    <ul>
-
-                      <li>달군 팬에 기름 1스푼 넣고 생새우를 노릇하게 익혀주세요</li>
-                      <li>같은 팬에 엘로우 커리소스팩을 넣고 끓여주시면 완성</li>
-
-                    </ul>
-                  </div>
-                  <div>
-                    <div class="menu-title"># 시금치볶음밥</div>
-                    <ul>
-
-                      <li>달군 팬에 기름 1스푼 넣고 볶음밥팩을 넣고 고슬고슬 볶아주세요</li>
-                      <li>같은 팬에 시금치팩을 넣고 숨이 죽을때까지만 볶아주면 완성</li>
-
-                    </ul>
-                  </div>
-                  <div>
-                    <div class="menu-title"># 돼지고기볶음</div>
-                    <ul>
-
-                      <li>달군 팬에 기름 1스푼 넣고 돼지고기볶음팩을 넣고 볶아주세요</li>
-                      <li>같은 팬에 야채팩을 넣고 숨이 반정도 죽을때까지 볶아주면 완성</li>
-
-                    </ul>
-                  </div>
-
+                  <div id="modal-product-recipe" class="pre-line"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
