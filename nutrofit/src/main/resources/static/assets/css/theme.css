@@ -12196,20 +12196,31 @@
 }
 
 div.zoom {
-  background-position: 50% 50%;
+  background-position: center center;
+  background-size: contain; /* 이미지를 영역 안에 맞추도록 설정 */
+  background-repeat: no-repeat; /* 배경 이미지 반복 금지 */
   position: relative;
-  width: 100%;
+  height: 525px; /* 고정된 높이 설정 */
   overflow: hidden;
   cursor: zoom-in;
   border-radius: 0.5rem;
 }
-div.zoom img:hover {
-  opacity: 0;
-}
+
 div.zoom img {
-  transition: opacity 0.5s;
   display: block;
-  width: 100%;
+  height: 100%; /* 세로 크기를 부모 요소에 맞춤 */
+  width: auto; /* 가로 크기를 비율에 따라 자동 조정 */
+  object-fit: contain; /* 이미지를 잘리지 않도록 조정 */
+  border-radius: 0.5rem; /* 둥근 모서리 유지 */
+  transition: opacity 0.3s ease; /* 부드러운 전환 */
+}
+
+div.zoom:hover img {
+  opacity: 0; /* 마우스 오버 시 이미지 투명도 조정 (줌 효과만 보이도록) */
+}
+
+div.zoom:hover {
+  background-size: 120%; /* 줌 이벤트에서 배경 이미지 확대 */
 }
 
 .simplebar-scrollbar:before {
@@ -36313,8 +36324,8 @@ input::-webkit-inner-spin-button {
 }
 .input-spinner .button-minus:hover,
 .input-spinner .button-plus:hover {
-  background-color: var(--fc-gray-200);
-  border-color: var(--fc-gray-200);
+  background-color: #fe4923;
+  border-color: #fe4923;
 }
 .input-spinner .form-input {
   width: 2rem !important;

@@ -131,3 +131,40 @@
   border-radius : 5px;
 }
 
+.portion-btn.active{
+    background-color: #fe4923;
+    color: white;
+    border-color: #fe4923;
+    opacity:1;
+}
+
+.select-and-add {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-add {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.price-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 120px;
+}
+
+.original-price {
+  color: #868e96;
+  font-size: 0.9em;
+  text-decoration: line-through;
+  margin-bottom: 0.2rem;
+}
+
+.discounted-price {
+  margin: 0;
+}
+

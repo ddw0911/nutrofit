@@ -257,6 +257,16 @@ button{
   white-space : pre-line;
 }
 
+.btn-font{
+  display : flex;
+  justify-content :center;
+  align-items : center;
+  font-size : medium;
+  text-align :center;
+  border-width: 2px;
+  padding : 1.5px 2px 1.5px 2px;
+}
+
 .redbtn-big{
     border-style: none;
     background-color: #FE4923;

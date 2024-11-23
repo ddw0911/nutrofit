@@ -580,13 +580,13 @@
             <!-- 모달제품사진 -->
             <div class="product productModal" id="productModal">
               <div class="zoom" onmousemove="zoom(event)" id="zoom-preview" >
-                <img id="product-preview-image" src="" alt="">
+                <img id="product-preview-image" src="">
               </div>
               <div class="zoom" onmousemove="zoom(event)" id="zoom-compo" >
-                <img id="product-compo-image" src="" alt="">
+                <img id="product-compo-image" src="">
               </div>
               <div class="zoom" onmousemove="zoom(event)" id="zoom-ingre" >
-                <img id="product-ingre-image" src="" alt="">
+                <img id="product-ingre-image" src="">
               </div>
             </div>
 
@@ -596,13 +596,13 @@
                 <div class="col-3">
                   <div class="thumbnails-img">
                     <!-- 미리보기 사진 -->
-                    <img id="thumbnails-preview-image" src="" alt="">
+                    <img id="thumbnails-preview-image" src="">
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="thumbnails-img">
                     <!-- 구성품사진 -->
-                    <img id="thumbnails-compo-image" src="" alt="">
+                    <img id="thumbnails-compo-image" src="">
                   </div>
                 </div>
                 <div class="col-3">
@@ -675,13 +675,13 @@
                   </tr>
                   <tr>
                     <td>
-                      <button type="button" class="whitebtn-big">1인분</button>
+                      <button type="button" class="whitebtn-big portion-btn">1인분</button>
                     </td>
                     <td>
-                      <button type="button" class="whitebtn-big">2인분</button>
+                      <button type="button" class="whitebtn-big portion-btn">2인분</button>
                     </td>
                     <td>
-                      <button type="button" class="whitebtn-big">4인분</button>
+                      <button type="button" class="whitebtn-big portion-btn">4인분</button>
                     </td>
                   </tr>
                 </table>
@@ -689,20 +689,19 @@
               <!-- 수량설정 -->
               <div class="select-and-add">
                 <span class="input-group input-spinner count">
-                  <input type="button" value="-" class="button-minus  btn  btn-sm "
-                         data-field="quantity" style="border-width: 2px;">
-                  <input type="number" step="1" max="10" value="1" name="quantity"
-                         class="quantity-field form-control-sm form-input"
-                         style="border-style: none;">
-                  <input type="button" value="+" class="button-plus btn btn-sm "
-                         data-field="quantity" style="border-width: 2px;">
+                  <button type="button" class="button-minus btn btn-sm btn-font">-</button>
+                  <input type="number" step="1" value="1" class="quantity-field form-input">
+                  <button type="button" class="button-plus btn btn-sm btn-font">+</button>
                 </span>
-                <span class="cart-add">
-                  <span style="margin: 10px 2rem 0 10px;"><h5 id="modal-product-price"></h5></span>
+                <div class="cart-add">
+                  <div class="price-wrapper">
+                    <del id="modal-original-price" class="original-price" style="display: none;"></del>
+                    <h5 id="modal-product-price" class="discounted-price"></h5>
+                  </div>
                   <form action="/cart"><button type="submit" onclick="addToCart()" class="redbtn-big">
                   장바구니 담기
                   </button></form>
-                </span>
+                </div>
               </div>
 
 
