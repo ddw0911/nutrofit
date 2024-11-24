@@ -134,8 +134,8 @@ const cartManager = {
          quantity: parseInt(item.quantity),      // 수량 (quantity)
          portion: item.selectedPortion === '1인분' ? 'ONE' :
                   item.selectedPortion === '2인분' ? 'TWO' : 'FOUR',
-         discount: item.selectedPortion === '2인분' ? '3%' :
-                   item.selectedPortion === '4인분' ? '7%' : 'NONE',
+         discount: item.selectedPortion === '2인분' ? 'THREE_PER' :
+                   item.selectedPortion === '4인분' ? 'SEVEN_PER' : 'NONE',
          total: this.calculateItemPrice(item), // 총 가격 (total),
          regDate: this.getCurrentTime()
     }));
@@ -330,17 +330,32 @@ function quickAddToCart(button) {
   const productId = button.closest('.card-product').querySelector('.btn-action').getAttribute('data-id');
   const product = productManager.findProduct(parseInt(productId));
 
-  if (product) {
-    cartManager.addItem(product);
-  }
+  if (!product || !product.id) {
+          console.error('상품을 찾을 수 없음:', productId);
+          return;
+      }
+
+      console.log('간편 담기 상품:', product);
+      cartManager.addItem(product);
 }
 
 // 장바구니 담기 버튼 클릭 이벤트 핸들러
 function addToCart() {
-  const product = {
-    ...window.currentProduct
-  };
-  cartManager.addItem(product);
+  if (!window.currentProduct || !window.currentProduct.id) {
+          console.error('유효하지 않은 상품 정보');
+          return;
+      }
+
+      const product = {
+          id: window.currentProduct.id,          // id 명시적 지정
+          price: window.currentProduct.price,
+          name: window.currentProduct.name,
+          image: window.currentProduct.image,
+          quantity: window.currentProduct.quantity || 1,
+          selectedPortion: window.currentProduct.selectedPortion || '1인분'
+      };
+
+      cartManager.addItem(product);
 }
 
 // 장바구니 열릴 때 UI 업데이트
@@ -353,28 +368,36 @@ document.addEventListener('DOMContentLoaded', () => {
   cartManager.updateCartCount();
 });
 
-// 모달이 닫힐 때 데이터 초기화
+//모달 종료 시 데이터 초기화
 document.getElementById('quickViewModal').addEventListener('hidden.bs.modal', () => {
   console.log('모달 종료: 모든 데이터 초기화');
 
   const backdrop = document.querySelector('.modal-backdrop');
-      if (backdrop) {
-          backdrop.parentNode.removeChild(backdrop);
-      }
+  if (backdrop) {
+      backdrop.parentNode.removeChild(backdrop);
+  }
 
   document.body.classList.remove('modal-open');
   document.body.style.overflow = '';
   document.body.style.paddingRight = '';
 
-  window.currentProduct = null;
+  // 초기 상태로 리셋
+  window.currentProduct = {
+    selectedPortion: '1인분',
+    quantity: 1
+  };
 
   const quantityInput = document.querySelector('.quantity-field');
-  quantityInput.value = 1;
+  if (quantityInput) {
+    quantityInput.value = 1;
+  }
 
   document.querySelectorAll('.portion-btn').forEach(button => button.classList.remove('active'));
-  window.currentProduct.selectedPortion = '1인분';
 
-  updateTotalPrice();
+  // currentProduct가 존재할 때만 updateTotalPrice 호출
+  if (window.currentProduct) {
+    updateTotalPrice();
+  }
 });
 
 document.getElementById('proceed-checkout').addEventListener('click', () =>{
