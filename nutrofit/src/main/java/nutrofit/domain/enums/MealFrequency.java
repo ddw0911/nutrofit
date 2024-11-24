@@ -14,4 +14,13 @@ public enum MealFrequency {
   public String get() {
     return frequency;
   }
+
+  public static MealFrequency getEnum(String frequency) {
+    for (MealFrequency frequencyEnum : MealFrequency.values()) {
+      if (frequencyEnum.frequency.equals(frequency)) {
+        return frequencyEnum;
+      }
+    }
+    return null;
+  }
 }

@@ -14,4 +14,18 @@ public enum MealPortion {
   public String get() {
     return portion;
   }
+
+  public static MealPortion getEnum(String portion) {
+    try {
+      return MealPortion.valueOf(portion);
+    } catch (IllegalArgumentException e) {
+      // enum 이름으로 매핑 실패시 portion 값으로 시도
+      for (MealPortion portionEnum : MealPortion.values()) {
+        if (portionEnum.portion.equals(portion)) {
+          return portionEnum;
+        }
+      }
+    }
+    return ONE;
+  }
 }

@@ -25,17 +25,9 @@ public class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
     return http
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/assets/**").permitAll()
-            .requestMatchers(
-                new AntPathRequestMatcher("/"),
-                new AntPathRequestMatcher("/error"),
-                new AntPathRequestMatcher("/signin"),
-                new AntPathRequestMatcher("/signup"),
-                new AntPathRequestMatcher("/signup/email-duplicate-check"),
-                new AntPathRequestMatcher("/menu/**"),
-                new AntPathRequestMatcher("/subscribe")
-            ).permitAll()
-            .anyRequest().authenticated())
+            .requestMatchers(new AntPathRequestMatcher("/api/cart/sync")).authenticated()
+            .requestMatchers(new AntPathRequestMatcher("/checkout/shop")).authenticated()
+            .anyRequest().permitAll())
         .formLogin(formLogin -> formLogin
             .loginPage("/signin")
             .usernameParameter("email")
@@ -44,7 +36,8 @@ public class SecurityConfig {
         .logout(logout -> logout
             .logoutUrl("/logout")
             .logoutSuccessUrl("/")
-            .invalidateHttpSession(true))
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID"))
         .csrf(AbstractHttpConfigurer::disable)
         .build();
   }

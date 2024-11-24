@@ -301,13 +301,6 @@ button{
     opacity: 1;
 }
 
-.select-amount{
-    background-color: #FE4923;
-    border: 2px solid #FE4923;
-    color:#ffffff;
-    opacity: 1;
-}
-
 .main-container{
     border-top:0.3rem #FE4923 solid;
 }

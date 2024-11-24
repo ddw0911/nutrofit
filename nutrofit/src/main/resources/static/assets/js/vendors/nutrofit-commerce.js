@@ -1,7 +1,18 @@
-// 초기 실행
+// 초기 실행 변수
 let isFirstRender = true;
-let allProducts = [];
-let cart = []; // 장바구니 데이터 저장
+
+const productManager = {
+  products: [],
+
+  setProducts(products) {
+    this.products = products;
+    window.allProducts = products;
+  },
+
+  findProduct(productId) {
+    return this.products.find(p => p.id === parseInt(productId));
+  }
+};
 
 // 초기 실행
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,7 +55,7 @@ async function loadCategoryMenu(category) {
     const response = await axios.get(`/menu/${category}`);
     console.log(`"${category}" 데이터 로드 완료:`, response.data);
 
-    allProducts = response.data.special.concat(response.data.signature);
+    productManager.setProducts(response.data.special.concat(response.data.signature));
     console.log(allProducts);
 
     // 기존 데이터를 제거한 후 새 데이터 렌더링
@@ -200,6 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+// 제품상세 정보 렌더링
 function viewProductDetailsModal(product) {
   const imageContainer = document.getElementById('productModal');
   const thumbnailsContainer = document.getElementById('productModalThumbnails');
@@ -274,10 +286,11 @@ function viewProductDetailsModal(product) {
 
   window.currentProduct = {
     id: product.id,
-    basePrice: product.price,
+    price: product.price,
     name: product.name,
+    image : product.imageUrl[0],
     selectedPortion: '1인분',
-    quantity: 1,
+    quantity: 1
   };
 
   // 수량 초기값 설정
@@ -376,27 +389,34 @@ function handleQuantityInput(event) {
 
 // 총 가격 계산 함수
 function updateTotalPrice() {
-  const basePrice = window.currentProduct.basePrice;
+  const price = window.currentProduct.price;
   const selectedPortion = window.currentProduct.selectedPortion || '1인분';
   const quantity = window.currentProduct.quantity;
 
-  let portionMultiplier = 1;
+  let portion = 1;
   let discount = 0;
   const originalPriceElement = document.getElementById('modal-original-price');
 
   // 인분 수에 따른 승수와 할인율 설정
   if (selectedPortion === '2인분') {
-    portionMultiplier = 2;
+    portion = 2;
     discount = 0.03; // 3% 할인
   } else if (selectedPortion === '4인분') {
-    portionMultiplier = 4;
+    portion = 4;
     discount = 0.07; // 7% 할인
   }
 
   // 원래 가격 계산 (할인 전)
-  const originalPrice = basePrice * portionMultiplier * quantity;
+  const originalPrice = price * portion * quantity;
   // 할인된 가격 계산
   const discountedPrice = Math.floor(originalPrice * (1 - discount));
+
+  // 최종 계산된 데이터를 window.currentProduct에 저장
+  window.currentProduct.finalPrice = discountedPrice; // 최종 가격
+  window.currentProduct.selectedPortion = selectedPortion;
+  window.currentProduct.originalPrice = originalPrice; // 원래 가격
+  window.currentProduct.discount = discount; // 할인율
+  console.log(currentProduct);
 
   // 1인분 선택시 원래 가격 숨기기
   if (discount > 0) {
@@ -409,59 +429,7 @@ function updateTotalPrice() {
   // 최종 가격 표시
   document.getElementById('modal-product-price').textContent =
     `${discountedPrice.toLocaleString()}원`;
-
-  console.log(`
-    계산 내역:
-    - 기본가격: ${basePrice}원
-    - 인분: ${portionMultiplier}인분
-    - 수량: ${quantity}개
-    - 할인율: ${discount * 100}%
-    - 원래가격: ${originalPrice}원
-    - 할인가격: ${discountedPrice}원
-  `);
 }
 
-// 장바구니에 제품 추가 함수
-function addToCart() {
-  // 현재 제품 정보를 장바구니에 추가
-  const productToAdd = {
-    ...window.currentProduct
-  };
 
-  // 기존 장바구니에 동일 제품이 있는지 확인
-  const existingProductIndex = cart.findIndex(
-    item => item.id === productToAdd.id && item.selectedPortion === productToAdd.selectedPortion
-  );
-  if (existingProductIndex !== -1) {
-    // 이미 있는 제품이라면 수량을 증가
-    cart[existingProductIndex].quantity += productToAdd.quantity;
-  } else {
-    // 새로운 제품이라면 장바구니에 추가
-    cart.push(productToAdd);
-  }
-
-  // 장바구니 데이터를 로컬 스토리지에 저장
-  localStorage.setItem('cart', JSON.stringify(cart));
-
-  console.log('장바구니 업데이트:', cart);
-}
-
-// 모달이 닫힐 때 데이터 초기화
-document.getElementById('quickViewModal').addEventListener('hidden.bs.modal', () => {
-  console.log('모달 종료: 모든 데이터 초기화');
-
-  const quantityInput = document.querySelector('.quantity-field');
-  quantityInput.value = 1;
-
-  document.querySelectorAll('.portion-btn').forEach(button => button.classList.remove('active'));
-  window.currentProduct.selectedPortion = '1인분';
-
-  updateTotalPrice();
-
-  // 백드롭 요소 제거
-  const backdrop = document.querySelector('.modal-backdrop');
-  if (backdrop) {
-    backdrop.parentNode.removeChild(backdrop);
-  }
-});
 

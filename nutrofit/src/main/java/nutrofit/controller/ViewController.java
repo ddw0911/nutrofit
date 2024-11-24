@@ -25,4 +25,9 @@ public class ViewController {
   public String subscribe() {
     return "subscription";
   }
+
+  @GetMapping("/checkout/shop")
+  public String shopCheckout() {
+    return "shop-checkout";
+  }
 }

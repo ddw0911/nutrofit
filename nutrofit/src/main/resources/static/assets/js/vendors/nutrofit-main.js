@@ -1,20 +1,3 @@
-function addToCart() {
-  const message = document.getElementById("cart-message");
-
-  // 메시지 표시
-  message.style.display = "block";
-
-  setTimeout(() => {
-    message.style.transform = "scale(1)";
-    message.style.opacity = "1";
-  }, 10);
-
-  // 3초 후에 메시지 숨기기
-  setTimeout(() => {
-    message.style.display = "none";
-  }, 3000);
-}
-
 function scrollToTop() {
   const scrollDuration = 200; // 스크롤이 완료되는 데 걸리는 시간 (밀리초)
   const startPosition = window.scrollY;
@@ -97,3 +80,4 @@ document
       textarea.hidden = true;
     }
   });
+

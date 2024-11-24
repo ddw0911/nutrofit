@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ko">
 
 <head>
 
@@ -52,7 +54,10 @@
 
 </head>
 
-<body>
+<body
+    th:data-user-logged-in="${#authentication.principal != 'anonymousUser'}"
+    th:data-member-id="${#authentication.principal != 'anonymousUser' ? #authentication.principal.id : ''}"
+    th:data-current-time="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')}">
 
 <!-- GNB -->
 <header class="py-lg-5 py-4 px-0 border-bottom border-bottom-lg-0 gnb">
@@ -81,7 +86,8 @@
           <!-- 로그인 상태 -->
           <!-- 나의 정보 버튼 -->
           <span th:if="${#authentication?.principal != 'anonymousUser'}">
-              <span class="black-95" th:utext="|${#authentication.principal.name}님,<br>환영합니다|"></span>
+              <span class="black-95"
+                    th:utext="|${#authentication.principal.name}님,<br>환영합니다|"></span>
           </span>
         </span>
 
@@ -105,7 +111,8 @@
             <!-- 로그인 상태 -->
             <form th:if="${#authentication?.principal != 'anonymousUser'}"
                   th:action="@{/logout}" method="post" class="text-muted">
-              <button type="submit" style="background: none; border: none; cursor: pointer; color: #00000075">
+              <button type="submit"
+                      style="background: none; border: none; cursor: pointer; color: #00000075">
                 <!-- 로그아웃 아이콘 -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -130,10 +137,10 @@
                 <line x1="3" y1="6" x2="21" y2="6"></line>
                 <path d="M16 10a4 4 0 0 1-8 0"></path>
               </svg>
-              <span
-                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+              <span id="cart-badge"
+                  class="position-absolute top-0 start-100 translate-middle badge cart-badge rounded-pill bg-success"
                   style="background-color: #FE4923 !important;">
-                    2
+
                     <span class="visually-hidden">itemcount</span>
               </span>
             </a>
@@ -156,78 +163,85 @@
   <!-- 장바구니 body -->
   <div class="offcanvas-body">
     <div>
-      <ul class="list-group list-group-flush">
-        <!-- 장바구니리스트 -->
-        <li class="list-group-item py-3 ps-0 border-top border-bottom">
+      <!-- 장바구니 리스트 -->
+      <ul class="list-group list-group-flush"></ul>
 
+      <!-- 장바구니 템플릿 -->
+      <template id="cart-item-container">
+        <li class="list-group-item py-3 ps-0 border-top border-bottom">
           <div class="row align-items-center cartitem">
             <!-- 장바구니상품 -->
             <div class="cartitem-card">
               <!-- 제품사진 -->
-              <span><img th:src="@{/assets/images/products/prawncurry-preview.jpg}"
-                         alt="product-img"></span>
+              <span><img class="cart-item-image" src=""></span>
               <span class="cartitem-middle">
-                        <!-- 제품명 -->
-                        <span><a href="#!" class="btn-action" data-bs-toggle="modal"
-                                 data-bs-target="#quickViewModal">
-                          <h5 class="mb-0">새우팟퐁커리 세트</h5></a>
-                        </span>
-                        <span><small class="text-muted">1인분, 8.900원</small></span>
-                        <span class="mt-2 small lh-1">
-                          <!-- 삭제(휴지통) -->
-                          <a href="#!" class="text-decoration-none text-inherit">
-                             <span
-                                 class="me-1 align-text-bottom">
-                                <!-- 휴지통 아이콘 -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                     viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round"
-                                     class="feather feather-trash-2 text-success"
-                                     style="color: #FE4923 !important;">
-                                   <polyline points="3 6 5 6 21 6"></polyline>
-                                   <path
-                                       d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                   </path>
-                                   <line x1="10" y1="11" x2="10" y2="17"></line>
-                                   <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
-                             </span>
-                             <span class="text-muted">삭제</span>
-                          </a>
-                       </span>
+                <!-- 제품명 -->
+                <span>
+                  <a href="#!" class="btn-action" data-bs-toggle="modal"
+                     data-bs-target="#quickViewModal">
+                    <h5 class="mb-0 cart-item-name"></h5>
+                  </a>
                 </span>
+                <span>
+                  <small class="text-muted">
+                    <span class="cart-item-portion"></span>,
+                    <span class="cart-item-price"></span>
+                  </small>
+                </span>
+                <span class="mt-2 small lh-1">
+                  <!-- 삭제(휴지통) -->
+                  <a href="#!" class="text-decoration-none text-inherit cart-item-remove">
+                    <span class="me-1 align-text-bottom">
+                      <!-- 휴지통 아이콘 -->
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                           viewBox="0 0 24 24" fill="none"
+                           stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                           stroke-linejoin="round"
+                           class="feather feather-trash-2 text-success"
+                           style="color: #FE4923 !important;">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path
+                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                        </path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                      </svg>
+                    </span>
+                    <span class="text-muted">삭제</span>
+                  </a>
+                </span>
+              </span>
               <!-- 오른쪽(인원 수, 수량, 가격) -->
               <span class="cartitem-right d-flex align-items-end gap-4">
-                <span class="padding-top-05 padding-bottom-5">
+                <span class="padding-top-05 padding-bottom-5 cart-portion-buttons">
                   <button type="button" class="select-amount">1인분</button>
-                  <button type="button">2인분</button>
-                  <button type="button">4인분</button>
+                  <button type="button" class="select-amount">2인분</button>
+                  <button type="button" class="select-amount">4인분</button>
                 </span>
                 <div class="input-group input-spinner updown">
-                  <input type="button" value="-" class="button-minus btn btn-sm"
-                         data-field="quantity" style="border-width: 2px;">
-                  <input type="number" step="1" max="10" value="2" name="quantity"
-                         class="quantity-field form-control-sm form-input"
+                  <input type="button" value="-" class="button-minus btn btn-sm cart-quantity-btn"
+                         data-action="decrease" style="border-width: 2px;">
+                  <input type="number" step="1" max="10" value="1"
+                         class="quantity-field form-control-sm form-input cart-item-quantity"
                          style="border-style: none;">
-                  <input type="button" value="+" class="button-plus btn btn-sm"
-                         data-field="quantity" style="border-width: 2px;">
+                  <input type="button" value="+" class="button-plus btn btn-sm cart-quantity-btn"
+                         data-action="increase" style="border-width: 2px;">
                 </div>
-                <span class="fw-bold">17,900원</span>
+                <span class="fw-bold cart-item-total-price"></span>
               </span>
             </div>
           </div>
         </li>
-
-      </ul>
-      <div style="display:block; font-weight: bold; margin: 10px; text-align: right;">합계 : 17,800원
+      </template>
+      <div style="display:block; font-weight: bold; margin: 10px; text-align: right;"
+           class="cart-total-price">
       </div>
       <!-- btn -->
       <div class="d-flex justify-content-between mt-4">
-        <button type="button" class="redbtn-big">쇼핑 계속하기</button>
-        <form th:action="@{/shop-checkout}">
-          <button type="submit" class="whitebtn-big">주문하러 가기</button>
-        </form>
+        <button type="button" class="redbtn-big" id="continue-shopping" data-bs-dismiss="offcanvas">
+          쇼핑 계속하기
+        </button>
+        <button type="button" class="whitebtn-big" id="proceed-checkout">주문하러 가기</button>
       </div>
     </div>
   </div>
@@ -267,7 +281,8 @@
     <!-- 밸런스식단 -->
     <div class="categories">
 
-      <span class="category-card" onclick="location.href='#item-list'; chooseCategory('BALANCE');" style="cursor:pointer;">
+      <span class="category-card" onclick="location.href='#item-list'; chooseCategory('BALANCE');"
+            style="cursor:pointer;">
         <span>
           <div class="category-img">
             <img th:src="@{/assets/images/banner/밸런스식단.png}" alt="밸런스식단.png">
@@ -280,7 +295,8 @@
       </span>
 
       <!-- 챌린지식단 -->
-      <span class="category-card" onclick="location.href='#item-list'; chooseCategory('CHALLENGE')" style="cursor:pointer;">
+      <span class="category-card" onclick="location.href='#item-list'; chooseCategory('CHALLENGE')"
+            style="cursor:pointer;">
         <span>
           <div class="category-img">
             <img th:src="@{/assets/images/banner/챌린지식단.png}" alt="챌린지식단.png">
@@ -293,7 +309,8 @@
       </span>
 
       <!-- 케어식단 -->
-      <span class="category-card" onclick="location.href='#item-list'; chooseCategory('CARE')" style="cursor:pointer;">
+      <span class="category-card" onclick="location.href='#item-list'; chooseCategory('CARE')"
+            style="cursor:pointer;">
         <span>
           <div class="category-img">
             <img th:src="@{/assets/images/banner/케어식단.png}" alt="케어식단.png">
@@ -442,7 +459,7 @@
         </aside>
 
         <div class="container menus">
-          <!-- 선택식단 메뉴리스트 -->
+          <!-- 식단 메뉴리스트 -->
           <!-- 특별메뉴 -->
           <div class="menu-special">
             <h5 class="mb-1 red-75">특별메뉴</h5>
@@ -471,7 +488,8 @@
                 <img class="mb-3 product-image" src="" alt="">
                 <div class="card-product-action">
                   <!-- 제품상세정보 버튼 -->
-                  <button type="button" onclick="openProductDetailsModal(this)" data-id="${product.id}" class="btn-action" style="border-style: none;"
+                  <button type="button" onclick="openProductDetailsModal(this)"
+                          data-id="${product.id}" class="btn-action" style="border-style: none;"
                           data-bs-toggle="modal" data-bs-target="#quickViewModal">
                     <i class="bi bi-eye" data-bs-toggle="tooltip" data-bs-html="true"></i></button>
                 </div>
@@ -488,7 +506,7 @@
               <div class="d-flex justify-content-between align-items-center mt-3 price-cart">
                 <div><span class="product-price text-dark"></span></div>
                 <!-- 장바구니 담기 버튼 -->
-                <button type="button" onclick="addToCart()" class="btn btn-primary btn-sm">
+                <button type="button" onclick="quickAddToCart(this)" class="btn btn-primary btn-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                        viewBox="0 0 24 24" fill="none"
                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -535,10 +553,10 @@
         <line x1="3" y1="6" x2="21" y2="6"></line>
         <path d="M16 10a4 4 0 0 1-8 0"></path>
       </svg>
-      <span
+      <span id="float-cart-badge"
           class="position-absolute top-0 start-100 translate-middle badge-big rounded-pill bg-success"
           style="background-color: #FE4923 !important;">
-            2
+
             <span class="visually-hidden">itemCount</span>
       </span>
     </a>
@@ -579,13 +597,13 @@
           <div class="col-lg-6">
             <!-- 모달제품사진 -->
             <div class="product productModal" id="productModal">
-              <div class="zoom" onmousemove="zoom(event)" id="zoom-preview" >
+              <div class="zoom" onmousemove="zoom(event)" id="zoom-preview">
                 <img id="product-preview-image" src="">
               </div>
-              <div class="zoom" onmousemove="zoom(event)" id="zoom-compo" >
+              <div class="zoom" onmousemove="zoom(event)" id="zoom-compo">
                 <img id="product-compo-image" src="">
               </div>
-              <div class="zoom" onmousemove="zoom(event)" id="zoom-ingre" >
+              <div class="zoom" onmousemove="zoom(event)" id="zoom-ingre">
                 <img id="product-ingre-image" src="">
               </div>
             </div>
@@ -695,12 +713,13 @@
                 </span>
                 <div class="cart-add">
                   <div class="price-wrapper">
-                    <del id="modal-original-price" class="original-price" style="display: none;"></del>
+                    <del id="modal-original-price" class="original-price"
+                         style="display: none;"></del>
                     <h5 id="modal-product-price" class="discounted-price"></h5>
                   </div>
-                  <form action="/cart"><button type="submit" onclick="addToCart()" class="redbtn-big">
-                  장바구니 담기
-                  </button></form>
+                  <button type="submit" onclick="addToCart()" class="redbtn-big">
+                    장바구니 담기
+                  </button>
                 </div>
               </div>
 
@@ -986,6 +1005,7 @@
 <script th:src="@{/assets/js/vendors/increment-value.js}"></script>
 <script th:src="@{/assets/js/vendors/nutrofit-main.js}"></script>
 <script th:src="@{/assets/js/vendors/nutrofit-commerce.js}"></script>
+<script th:src="@{/assets/js/vendors/nutrofit-cart.js}"></script>
 
 
 </body>
