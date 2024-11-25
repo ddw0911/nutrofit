@@ -329,6 +329,13 @@ button{
     margin:0 !important;
 }
 
+#logout-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #00000075
+}
+
 .slogan{
     position: relative;
     height: 390px;

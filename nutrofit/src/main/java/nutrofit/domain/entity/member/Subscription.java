@@ -28,7 +28,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"memberBasic"})
 @Builder
 @EntityListeners(value={AuditingEntityListener.class})
 public class Subscription {

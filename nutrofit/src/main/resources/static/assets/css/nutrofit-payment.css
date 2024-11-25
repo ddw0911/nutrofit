@@ -3,8 +3,12 @@
     border-style:none;
 }
 
+.address{
+    display : inline;
+}
+
 .address-info td{
-    padding: 0 1.5rem 0.5rem 0;
+    padding: 0 1.5rem 1.5rem 0;
 }
 
 .order-requirement{

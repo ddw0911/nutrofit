@@ -114,8 +114,9 @@ const cartManager = {
         return;
     }
         const memberId = this.getMemberId();
+        console.log("로그인 사용자 id:", memberId);
         if(!memberId) {
-          console.error("memberId not founded");
+          console.error("member not founded");
           return;
         }
 
@@ -353,6 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
   cartManager.updateCartCount();
 });
 
+
+
 // 모달이 닫힐 때 데이터 초기화
 document.getElementById('quickViewModal').addEventListener('hidden.bs.modal', () => {
   console.log('모달 종료: 모든 데이터 초기화');
@@ -377,6 +380,19 @@ document.getElementById('quickViewModal').addEventListener('hidden.bs.modal', ()
   updateTotalPrice();
 });
 
-document.getElementById('proceed-checkout').addEventListener('click', () =>{
-  window.location.href = '/checkout/shop';
+document.getElementById('proceed-checkout').addEventListener('click', async () =>{
+  try {
+          const response = await fetch('/api/auth/status');
+          const isLoggedIn = await response.json();
+
+          if (isLoggedIn) {
+              window.location.href = '/checkout/shop';
+          } else {
+              alert("로그인이 필요한 서비스입니다. 로그인 화면으로 이동합니다.");
+              window.location.href = '/signin';
+          }
+      } catch (error) {
+          console.error('인증 상태 확인 중 오류 발생:', error);
+          alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+      }
 });

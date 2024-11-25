@@ -56,6 +56,7 @@
 
 <body
     th:data-user-logged-in="${#authentication.principal != 'anonymousUser'}"
+    th:data-member="${#authentication.principal}"
     th:data-member-id="${#authentication.principal != 'anonymousUser' ? #authentication.principal.id : ''}"
     th:data-current-time="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')}">
 
@@ -78,13 +79,12 @@
                                                        style="color: black;">정기구독</a></button></span>
         <!-- 회원가입/마이페이지 버튼 -->
         <span class="gnb-btn">
-          <!-- 비로그인 상태 -->
+          <!-- 비로그인 상태 : 회원가입 버튼-->
           <button type="button" th:if="${#authentication.principal == 'anonymousUser'}">
               <a th:href="@{/signup}" style="color: black;">회원가입</a>
           </button>
 
-          <!-- 로그인 상태 -->
-          <!-- 나의 정보 버튼 -->
+          <!-- 로그인 상태 : 나의정보 버튼-->
           <span th:if="${#authentication?.principal != 'anonymousUser'}">
               <span class="black-95"
                     th:utext="|${#authentication.principal.name}님,<br>환영합니다|"></span>
@@ -93,7 +93,7 @@
 
         <div class="list-inline ms-auto d-lg-block d-none gnb-icons">
           <div class="list-inline-item">
-            <!-- 비로그인 상태 -->
+            <!-- 비로그인 상태 : 로그인 버튼 -->
             <a th:if="${#authentication.principal == 'anonymousUser'}"
                th:href="@{/signin}" class="text-muted">
               <!-- 로그인 아이콘 -->
@@ -106,13 +106,10 @@
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
             </a>
-
-
-            <!-- 로그인 상태 -->
+            <!-- 로그인 상태 : 로그아웃 버튼-->
             <form th:if="${#authentication?.principal != 'anonymousUser'}"
                   th:action="@{/logout}" method="post" class="text-muted">
-              <button type="submit"
-                      style="background: none; border: none; cursor: pointer; color: #00000075">
+              <button type="submit" id="logout-btn">
                 <!-- 로그아웃 아이콘 -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -1006,7 +1003,6 @@
 <script th:src="@{/assets/js/vendors/nutrofit-main.js}"></script>
 <script th:src="@{/assets/js/vendors/nutrofit-commerce.js}"></script>
 <script th:src="@{/assets/js/vendors/nutrofit-cart.js}"></script>
-
 
 </body>
 

@@ -23,6 +23,7 @@ import lombok.ToString;
 public class Nutrition {
 
   @Id
+  @Column(name="product_id")
   private Long productId;
 
   @MapsId
