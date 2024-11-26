@@ -39,6 +39,7 @@ public class CheckoutService {
     return new DeliveryInfoDTO(deliveryInfo);
   }
 
+  @Transactional
   public DeliveryInfo updateDeliveryInfo(Long id, DeliveryInfoDTO dto) {
     DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(id)
         .orElseThrow(ExceptionMessage.NOT_FOUNDED::get);
@@ -47,14 +48,20 @@ public class CheckoutService {
     return deliveryInfo;       // save 불필요
   }
 
-  public DeliveryInfo updateDeliveryRequirement(Long id, DeliveryInfoDTO dto) {
+  public String getDeliveryRequirement(Long memberId) {
+    DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(memberId)
+        .orElseThrow(ExceptionMessage.NOT_FOUNDED::get);
+    return deliveryInfo.getRequirement();
+  }
+
+  @Transactional
+  public DeliveryInfo updateDeliveryRequirement(Long id, String requirement) {
 
     DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(id)
         .orElseThrow(ExceptionMessage.NOT_FOUNDED::get);
 
     // requirement 만 업데이트
-    deliveryInfo.updateRequirement(dto.getRequirement());
-
+    deliveryInfo.updateRequirement(requirement);
     return deliveryInfo;
   }
 }

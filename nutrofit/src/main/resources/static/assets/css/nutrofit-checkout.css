@@ -1,3 +1,7 @@
+.hover-title:hover{
+  color:#fe4923 !important;
+}
+
 .payment-container{
     padding:1rem 0 0 3rem !important;
     border-style:none;

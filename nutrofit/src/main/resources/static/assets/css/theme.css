@@ -12364,7 +12364,7 @@ div.zoom:hover {
   --fc-link-color-rgb: 10, 173, 10;
   --fc-link-decoration: underline;
   --fc-link-hover-color: #FE4923;
-  --fc-link-hover-color-rgb: 8, 138, 8;
+  --fc-link-hover-color-rgb: #FE4923;
   --fc-code-color: #d63384;
   --fc-highlight-bg: #fff3cd;
   --fc-border-width: 1px;
@@ -12435,9 +12435,9 @@ div.zoom:hover {
   --fc-dark-border-subtle: #21313c;
   --fc-heading-color: #fff;
   --fc-link-color: #6cce6c;
-  --fc-link-hover-color: #9dde9d;
+  --fc-link-hover-color: #FE4923;
   --fc-link-color-rgb: 108, 206, 108;
-  --fc-link-hover-color-rgb: 157, 222, 157;
+  --fc-link-hover-color-rgb: #FE4923;
   --fc-code-color: #e685b5;
   --fc-border-color: #3d4f58;
   --fc-border-color-translucent: rgba(255, 255, 255, 0.15);

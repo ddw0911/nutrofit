@@ -45,9 +45,12 @@
   <link rel="stylesheet" th:href="@{/assets/css/nutrofit-main.css}">
   <link rel="stylesheet" th:href="@{/assets/css/nutrofit-detail.css}">
   <link rel="stylesheet" th:href="@{/assets/css/nutrofit-modal.css}">
-  <link rel="stylesheet" th:href="@{/assets/css/nutrofit-payment.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/nutrofit-checkout.css}">
 
+  <!--axios-->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!--카카오 주소찾기 api-->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </head>
@@ -155,7 +158,7 @@
                   <a href="#" class="fs-5 text-inherit collapsed h4" data-bs-toggle="collapse"
                      data-bs-target="#flush-collapseOne" aria-expanded="true"
                      aria-controls="flush-collapseOne">
-                    <li class="padding-tb-5">배송정보확인</li>
+                    <li class="padding-tb-5 hover-title">배송정보확인</li>
 
                   </a>
                   <!-- btn -->
@@ -213,7 +216,7 @@
                   <a href="#" class="fs-5 text-inherit collapsed h4" data-bs-toggle="collapse"
                      data-bs-target="#flush-collapseThree" aria-expanded="true"
                      aria-controls="flush-collapseThree">
-                    <li class="padding-top-20">배송요청사항</li>
+                    <li class="padding-top-20 hover-title">배송요청사항</li>
                   </a>
                   <!-- btn -->
                 </div>
@@ -230,8 +233,8 @@
                       <option value="없음">없음</option>
                     </select>
                     <div class="form-check padding-top-10 align-item-right">
-                      <input class="form-check-input " type="checkbox" value=""
-                             name="flexCheckDefault">
+                      <input class="form-check-input" type="checkbox" value=""
+                             name="flexCheckDefault" id="requirement-use-next">
                       <!-- label --> <label class="form-check-label padding-left-5"
                                             for="flexCheckDefault">
                       다음에도 사용
@@ -247,7 +250,7 @@
                        aria-controls="flush-collapseOne">이전</a>
                     <a href="#" class="btn btn-primary ms-2" data-bs-toggle="collapse"
                        data-bs-target="#flush-collapseFour" aria-expanded="false"
-                       aria-controls="flush-collapseFour">다음</a>
+                       aria-controls="flush-collapseFour" id="delivery-requirement-to-next">다음</a>
                   </div>
                 </div>
 
@@ -260,7 +263,7 @@
                   <a href="#" class="fs-5 text-inherit collapsed h4" data-bs-toggle="collapse"
                      data-bs-target="#flush-collapseFour" aria-expanded="true"
                      aria-controls="flush-collapseFour">
-                    <li class="padding-top-20">결제방법(간편결제)</li>
+                    <li class="padding-top-20 hover-title">결제방법(간편결제)</li>
                   </a></div>
                 <div id="flush-collapseFour" class="accordion-collapse collapse "
                      data-bs-parent="#accordionFlushExample">
@@ -268,12 +271,12 @@
                   <div class="mt-5">
                     <div>
                       <div class="payment-api">
-                        <button><img th:src="@{/static/assets/images/payment/badge_npay.svg}"
+                        <button><img th:src="@{/assets/images/payment/badge_npay.svg}"
                                      alt="네이버페이"></button>
                         <button><img
-                            th:src="@{/static/assets/images/payment/payment_icon_yellow_large.png}"
+                            th:src="@{/assets/images/payment/payment_icon_yellow_large.png}"
                             alt="카카오페이"></button>
-                        <button><img th:src="@{/static/assets/images/payment/logo-toss-pay.svg}"
+                        <button><img th:src="@{/assets/images/payment/logo-toss-pay.svg}"
                                      alt="토스페이"></button>
                       </div>
 
