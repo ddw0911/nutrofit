@@ -106,7 +106,7 @@ const cartManager = {
     }, 3000);
   },
 
-  // 전체 장바구니 서버 동기화
+  // 로그인 시 서버-장바구니 동기화
   syncCartWithServer() {
     console.log('syncCartWithServer 시작');
     if (!this.isUserLoggedIn()) {
@@ -384,9 +384,14 @@ document.getElementById('proceed-checkout').addEventListener('click', async () =
   try {
           const response = await fetch('/api/auth/status');
           const isLoggedIn = await response.json();
+          const cart = JSON.parse(localStorage.getItem('cart'));
 
           if (isLoggedIn) {
+            if(cart.length===0){
+              alert("결제할 상품이 없습니다.");
+            } else {
               window.location.href = '/checkout/shop';
+            }
           } else {
               alert("로그인이 필요한 서비스입니다. 로그인 화면으로 이동합니다.");
               window.location.href = '/signin';
