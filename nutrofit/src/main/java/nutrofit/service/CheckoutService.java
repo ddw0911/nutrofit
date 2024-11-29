@@ -55,9 +55,9 @@ public class CheckoutService {
   }
 
   @Transactional
-  public DeliveryInfo updateDeliveryRequirement(Long id, String requirement) {
+  public DeliveryInfo updateDeliveryRequirement(Long memberId, String requirement) {
 
-    DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(id)
+    DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(memberId)
         .orElseThrow(ExceptionMessage.NOT_FOUNDED::get);
 
     // requirement 만 업데이트

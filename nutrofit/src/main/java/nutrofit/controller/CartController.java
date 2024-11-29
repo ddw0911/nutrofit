@@ -78,6 +78,7 @@ public class CartController {
     return ResponseEntity.ok(cartItems);
   }
 
+  //
   @PostMapping("/{memberId}")
   public ResponseEntity<String> addCartItem(@PathVariable(required = false) Long memberId, @RequestBody CartItemDTO cartItemDTO) {
     if (memberId == null || SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {

@@ -42,7 +42,6 @@
     max-width: 40%;
 }
 
-
 .cartitem-right2 {
     flex: 1.5; 
     max-width: 35%; 
@@ -63,18 +62,4 @@
     display: flex;
     justify-content: right;
     width: 100%;
-}
-
-.select-amount:hover{
-    background-color: #fe4923;
-    border: 2px solid #FE4923;
-    color:#ffffff;
-    opacity: 1;
-}
-
-.select-amount.active{
-    background-color: #fe4923;
-        border: 2px solid #FE4923;
-        color:#ffffff;
-        opacity: 1;
 }

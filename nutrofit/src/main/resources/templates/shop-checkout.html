@@ -52,6 +52,10 @@
 
   <!--카카오 주소찾기 api-->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <!--토스페이먼츠 api-->
+  <script src="https://js.tosspayments.com/v2/standard"></script>
+  <!--uuid sdk-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 
 </head>
 
@@ -174,9 +178,9 @@
                         <div class="card card-body p-6">
                           <!-- 주소정보 -->
                           <address>
-                            <table class="address-info">
+                            <table class="delivery-info">
                               <tr>
-                                <td>수령인이름</td>
+                                <td style="width: 7rem">수령인이름</td>
                                 <td th:text="${deliveryInfo.name}"></td>
                               </tr>
                               <tr>
@@ -253,8 +257,6 @@
                        aria-controls="flush-collapseFour" id="delivery-requirement-to-next">다음</a>
                   </div>
                 </div>
-
-
               </div>
               <!-- accordion item -->
               <div class="accordion-item py-4 bg-beige payment-container">
@@ -263,27 +265,19 @@
                   <a href="#" class="fs-5 text-inherit collapsed h4" data-bs-toggle="collapse"
                      data-bs-target="#flush-collapseFour" aria-expanded="true"
                      aria-controls="flush-collapseFour">
-                    <li class="padding-top-20 hover-title">결제방법(간편결제)</li>
+                    <li class="padding-top-20 hover-title">결제방법(간편결제) 확인</li>
                   </a></div>
-                <div id="flush-collapseFour" class="accordion-collapse collapse "
+                <div id="flush-collapseFour" class="accordion-collapse collapse"
                      data-bs-parent="#accordionFlushExample">
-
                   <div class="mt-5">
                     <div>
+                      <p class="h6 black-75" style="padding: 0.5rem 0 0 1.5rem;">다음과 같이 제공됩니다.</p>
                       <div class="payment-api">
-                        <button><img th:src="@{/assets/images/payment/badge_npay.svg}"
-                                     alt="네이버페이"></button>
-                        <button><img
-                            th:src="@{/assets/images/payment/payment_icon_yellow_large.png}"
-                            alt="카카오페이"></button>
-                        <button><img th:src="@{/assets/images/payment/logo-toss-pay.svg}"
-                                     alt="토스페이"></button>
+                        <button><img th:src="@{/assets/images/payment/badge_npay.svg}" alt="네이버페이"></button>
+                        <button><img th:src="@{/assets/images/payment/payment_icon_yellow_large.png}" alt="카카오페이"></button>
+                        <button><img th:src="@{/assets/images/payment/logo-toss-pay.svg}" alt="토스페이"></button>
                       </div>
-
-
-                      <!-- Button -->
                       <div class="mt-5 d-flex justify-content-end mt-1 padding-bottom-20">
-
                         <a href="#" class="btn btn-outline-gray-400 text-muted"
                            data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
                            aria-expanded="false"
@@ -292,349 +286,133 @@
                     </div>
                   </div>
                 </div>
-
               </div>
-
-
             </div>
-
           </div>
           <!-- 주문상품정보 -->
           <div class="col-12 col-md-12 col-lg-55 padding-bottom-30">
             <div class="order-item-info">
               <div class="card shadow-sm ">
                 <h5 class="px-6 py-4 bg-transparent mb-0">주문상품정보</h5>
-                <ul class="list-group list-group-flush ">
-                  <!-- 주문상품 row -->
-                  <li class="list-group-item px-4 py-3">
-                    <div class="row align-items-center order-item-info-one">
-                      <!-- 주문상품 이미지 -->
-                      <div class="col-3 col-md-3 cartitem-card orderitem-card">
-                        <img src="../static/assets/images/products/prawncurry-preview.jpg"
-                             alt="새우팟퐁커리" class="img-fluid">
-                      </div>
-
-                      <!-- 주문상품 제목 및 삭제 버튼-->
-                      <div class="col-5 col-md-5 order-item-name">
-                        <small class="black-75">밸런스식단</small>
-                        <h6 class="mb-0">새우팟퐁커리 세트</h6>
-                        <span><small class="text-muted">1인분, 8,900원</small></span>
-                        <div class="mt-2 small lh-1">
-                          <a href="#!" class="text-decoration-none text-inherit">
-                            <span class="me-1 align-text-bottom">
-                              <!-- 휴지통 아이콘 -->
-                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                   class="feather feather-trash-2 text-success"
-                                   style="color: #FE4923 !important;">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                              </svg>
-                            </span>
-                            <span class="text-muted">삭제</span>
-                          </a>
-                        </div>
-                      </div>
-
-                      <!-- 주문수량 및 가격 정보-->
-                      <span class="cartitem-right2 d-flex align-items-end gap-2">
-                        <span>
-                          <button type="button" class="select-amount">1인분</button>
-                          <button type="button">2인분</button>
-                          <button type="button">4인분</button>
-                        </span>
-                        <div class="input-group input-spinner updown2">
-                          <input type="button" value="-" class="button-minus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                          <input type="number" step="1" max="10" value="2" name="quantity"
-                                 class="quantity-field form-control-sm form-input"
-                                 style="border-style: none;">
-                          <input type="button" value="+" class="button-plus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                        </div>
-                        <span class="fw-bold">17,900원</span>
-                      </span>
-                    </div>
-                  </li>
-
-                  <!-- 주문상품 row -->
-                  <li class="list-group-item px-4 py-3">
-                    <div class="row align-items-center order-item-info-one">
-                      <!-- 주문상품 이미지 -->
-                      <div class="col-3 col-md-3 cartitem-card orderitem-card">
-                        <img src="../static/assets/images/products/image-removebg-preview.png"
-                             alt="훈제오리구이" class="img-fluid">
-                      </div>
-
-                      <!-- 주문상품 제목 및 삭제 버튼-->
-                      <div class="col-5 col-md-5 order-item-name">
-                        <small class="black-75">고단백</small>
-                        <h6 class="mb-0">훈제오리구이 세트</h6>
-                        <span><small class="text-muted">1인분, 7,900원</small></span>
-                        <div class="mt-2 small lh-1">
-                          <a href="#!" class="text-decoration-none text-inherit">
-                            <span class="me-1 align-text-bottom">
-                              <!-- 휴지통 아이콘 -->
-                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                   class="feather feather-trash-2 text-success"
-                                   style="color: #FE4923 !important;">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                              </svg>
-                            </span>
-                            <span class="text-muted">삭제</span>
-                          </a>
-                        </div>
-                      </div>
-
-                      <!-- 주문수량 및 가격 정보-->
-                      <span class="cartitem-right2 d-flex align-items-end gap-2">
-                        <span>
-                          <button type="button">1인분</button>
-                          <button type="button" class="select-amount">2인분</button>
-                          <button type="button">4인분</button>
-                        </span>
-                        <div class="input-group input-spinner updown2">
-                          <input type="button" value="-" class="button-minus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                          <input type="number" step="1" max="10" value="3" name="quantity"
-                                 class="quantity-field form-control-sm form-input"
-                                 style="border-style: none;">
-                          <input type="button" value="+" class="button-plus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                        </div>
-                        <span class="fw-bold original-price">53,400원</span>
-                        <div>
-                          <span class="discount-rate">3% 할인</span>
-                          <span>51,798원</span>
-                        </div>
-                      </span>
-                    </div>
-                  </li>
-                  <!-- 주문상품 row -->
-                  <li class="list-group-item px-4 py-3">
-                    <div class="row align-items-center order-item-info-one">
-                      <!-- 주문상품 이미지 -->
-                      <div class="col-3 col-md-3 cartitem-card orderitem-card">
-                        <img src="../static/assets/images/products/image-removebg-preview.png"
-                             alt="훈제오리구이" class="img-fluid">
-                      </div>
-
-                      <!-- 주문상품 제목 및 삭제 버튼-->
-                      <div class="col-5 col-md-5 order-item-name">
-                        <small class="black-75">고단백</small>
-                        <h6 class="mb-0">훈제오리구이 세트</h6>
-                        <span><small class="text-muted">1인분, 7,900원</small></span>
-                        <div class="mt-2 small lh-1">
-                          <a href="#!" class="text-decoration-none text-inherit">
-                            <span class="me-1 align-text-bottom">
-                              <!-- 휴지통 아이콘 -->
-                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                   class="feather feather-trash-2 text-success"
-                                   style="color: #FE4923 !important;">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                              </svg>
-                            </span>
-                            <span class="text-muted">삭제</span>
-                          </a>
-                        </div>
-                      </div>
-
-                      <!-- 주문수량 및 가격 정보-->
-                      <span class="cartitem-right2 d-flex align-items-end gap-2">
-                        <span>
-                          <button type="button">1인분</button>
-                          <button type="button" class="select-amount">2인분</button>
-                          <button type="button">4인분</button>
-                        </span>
-                        <div class="input-group input-spinner updown2">
-                          <input type="button" value="-" class="button-minus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                          <input type="number" step="1" max="10" value="3" name="quantity"
-                                 class="quantity-field form-control-sm form-input"
-                                 style="border-style: none;">
-                          <input type="button" value="+" class="button-plus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                        </div>
-                        <span class="fw-bold original-price">53,400원</span>
-                        <div>
-                          <span class="discount-rate">3% 할인</span>
-                          <span>51,798원</span>
-                        </div>
-                      </span>
-                    </div>
-                  </li>
-                  <!-- 주문상품 row -->
-                  <li class="list-group-item px-4 py-3">
-                    <div class="row align-items-center order-item-info-one">
-                      <!-- 주문상품 이미지 -->
-                      <div class="col-3 col-md-3 cartitem-card orderitem-card">
-                        <img src="../static/assets/images/products/image-removebg-preview.png"
-                             alt="훈제오리구이" class="img-fluid">
-                      </div>
-
-                      <!-- 주문상품 제목 및 삭제 버튼-->
-                      <div class="col-5 col-md-5 order-item-name">
-                        <small class="black-75">고단백</small>
-                        <h6 class="mb-0">훈제오리구이 세트</h6>
-                        <span><small class="text-muted">1인분, 7,900원</small></span>
-                        <div class="mt-2 small lh-1">
-                          <a href="#!" class="text-decoration-none text-inherit">
-                            <span class="me-1 align-text-bottom">
-                              <!-- 휴지통 아이콘 -->
-                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                   class="feather feather-trash-2 text-success"
-                                   style="color: #FE4923 !important;">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                              </svg>
-                            </span>
-                            <span class="text-muted">삭제</span>
-                          </a>
-                        </div>
-                      </div>
-
-                      <!-- 주문수량 및 가격 정보-->
-                      <span class="cartitem-right2 d-flex align-items-end gap-2">
-                        <span>
-                          <button type="button">1인분</button>
-                          <button type="button" class="select-amount">2인분</button>
-                          <button type="button">4인분</button>
-                        </span>
-                        <div class="input-group input-spinner updown2">
-                          <input type="button" value="-" class="button-minus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                          <input type="number" step="1" max="10" value="3" name="quantity"
-                                 class="quantity-field form-control-sm form-input"
-                                 style="border-style: none;">
-                          <input type="button" value="+" class="button-plus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                        </div>
-                        <span class="fw-bold original-price">53,400원</span>
-                        <div>
-                          <span class="discount-rate">3% 할인</span>
-                          <span>51,798원</span>
-                        </div>
-                      </span>
-                    </div>
-                  </li>
-                  <!-- 주문상품 row -->
-                  <li class="list-group-item px-4 py-3">
-                    <div class="row align-items-center order-item-info-one">
-                      <!-- 주문상품 이미지 -->
-                      <div class="col-3 col-md-3 cartitem-card orderitem-card">
-                        <img src="../static/assets/images/products/image-removebg-preview.png"
-                             alt="훈제오리구이" class="img-fluid">
-                      </div>
-
-                      <!-- 주문상품 제목 및 삭제 버튼-->
-                      <div class="col-5 col-md-5 order-item-name">
-                        <small class="black-75">고단백</small>
-                        <h6 class="mb-0">훈제오리구이 세트</h6>
-                        <span><small class="text-muted">1인분, 7,900원</small></span>
-                        <div class="mt-2 small lh-1">
-                          <a href="#!" class="text-decoration-none text-inherit">
-                            <span class="me-1 align-text-bottom">
-                              <!-- 휴지통 아이콘 -->
-                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                   class="feather feather-trash-2 text-success"
-                                   style="color: #FE4923 !important;">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                              </svg>
-                            </span>
-                            <span class="text-muted">삭제</span>
-                          </a>
-                        </div>
-                      </div>
-
-                      <!-- 주문수량 및 가격 정보-->
-                      <span class="cartitem-right2 d-flex align-items-end gap-2">
-                        <span>
-                          <button type="button">1인분</button>
-                          <button type="button" class="select-amount">2인분</button>
-                          <button type="button">4인분</button>
-                        </span>
-                        <div class="input-group input-spinner updown2">
-                          <input type="button" value="-" class="button-minus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                          <input type="number" step="1" max="10" value="3" name="quantity"
-                                 class="quantity-field form-control-sm form-input"
-                                 style="border-style: none;">
-                          <input type="button" value="+" class="button-plus btn btn-sm"
-                                 data-field="quantity" style="border-width: 2px;">
-                        </div>
-                        <span class="fw-bold original-price">53,400원</span>
-                        <div>
-                          <span class="discount-rate">3% 할인</span>
-                          <span>51,798원</span>
-                        </div>
-                      </span>
-                    </div>
-                  </li>
-                  <!-- list group item -->
+                <ul class="list-group list-group-flush">
+                  <!-- 주문상품리스트 -->
+                  <div id="order-items-container"></div>
+                  <!-- 합계 금액 -->
                   <li class="list-group-item px-4 py-3 black-75">
-                    <div class="d-flex align-items-center justify-content-between   mb-2">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
                       <div>합계</div>
-                      <div class="fw-bold"> 69,598원</div>
+                      <div class="fw-bold" id="order-item-total"></div>
                     </div>
                     <div class="d-flex align-items-center justify-content-between  ">
                       <div>배송비</div>
-                      <div class="fw-bold">무료</div>
+                      <div class="fw-bold" id="shipment-fee">무료</div>
                     </div>
-
                   </li>
-
-                  <!-- list group item -->
+                  <!-- 주문 총 합계-->
                   <li class="list-group-item px-4 py-3">
                     <div class="d-flex align-items-center justify-content-between fw-bold">
                       <div>총 합계</div>
-                      <div>69,598원</div>
+                      <div id="order-total"></div>
                     </div>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
+
+          <!-- 주문상품정보 템플릿 -->
+          <template id="order-item-container">
+            <li class="list-group-item px-4 py-3">
+              <div class="row align-items-center order-item-info-one">
+                <!-- 장바구니상품 -->
+                <div class="col-3 col-md-3 order-item-card">
+                  <!-- 제품이미지 -->
+                  <img class="img-fluid" id="order-item-image" src="" alt="">
+                </div>
+                <div class="col-5 col-md-5 order-item-left">
+                  <!-- 제품정보(식단종류, 이름, 1회제공량, 가격) + 삭제 -->
+                  <small class="black-75" id="order-item-category"></small>
+                  <a href="#!" class="btn-action" data-bs-toggle="modal"
+                     data-bs-target="#quickViewModal">
+                    <h6 class="mb-0" id="order-item-name"></h6>
+                  </a>
+                  <span>
+                    <span class="text-muted">
+                      <small id="order-item-portion"></small>,
+                      <small id="order-item-price"></small>
+                    </span>
+                  </span>
+                  <div class="mt-2 small lh-1">
+                    <!-- 휴지통 아이콘 -->
+                    <a href="#!" class="text-decoration-none text-inherit" id="bin-icon">
+                      <span class="me-1 align-text-bottom">
+                        <!-- 휴지통 아이콘 -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                             viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round"
+                             class="feather feather-trash-2 text-success"
+                             style="color: #FE4923 !important;">
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path
+                              d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                          </path>
+                          <line x1="10" y1="11" x2="10" y2="17"></line>
+                          <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                      </span>
+                      <span class="text-muted">삭제</span>
+                    </a>
+                  </div>
+                </div>
+                <!-- 1회 제공량 버튼,주문수량 조절버튼, 총 가격 -->
+                <span class="cartitem-right2 d-flex align-items-end gap-2">
+                  <span class="cart-portion-buttons">
+                    <button type="button" class="select-amount">1인분</button>
+                    <button type="button" class="select-amount">2인분</button>
+                    <button type="button" class="select-amount">4인분</button>
+                  </span>
+                  <div class="input-group input-spinner updown2">
+                    <input type="button" value="-"
+                           class="button-minus btn btn-sm order-quantity-btn"
+                           data-action="decrease" style="border-width: 2px;">
+                    <input type="number" step="1" max="10" value="1"
+                           class="quantity-field form-control-sm form-input order-item-quantity"
+                           style="border-style: none;">
+                    <input type="button" value="+"
+                           class="button-plus btn btn-sm order-quantity-btn"
+                           data-action="increase" style="border-width: 2px;">
+                  </div>
+                  <div class="price-display text-end">
+                    <div id="order-item-total-price">
+                      <span class="text-decoration-line-through text-muted original-price"></span>
+                      <div class="discounted-price">
+                        <span class="text-danger discount-rate"></span>
+                        <span class="final-price"></span>
+                      </div>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </li>
+          </template>
           <!-- 결제확인 체크박스 -->
           <div class="approve-payment">
             <div class="form-check align-item-right">
               <input class="form-check-input " type="checkbox" value=""
                      id="payment-agree-checkbox" required>
-              <!-- label --> <label class="form-check-label padding-left-5"
-                                    for="payment-agree-checkbox">
-              결제 내용을 확인하였으며, 이에 동의합니다
-            </label>
+              <!-- label -->
+              <label class="form-check-label padding-left-5"
+                     for="payment-agree-checkbox">
+                결제 내용을 확인하였으며, 이에 동의합니다
+              </label>
             </div>
+            <!-- 결제하기 버튼 및 취소-->
             <div class="mt-5 d-flex justify-content-end mt-1">
               <button type="submit" id="pay-button" class="btn btn-primary">결제하기</button>
-              <a href="../pages/nutrofit.html"
-                 class="btn btn-outline-gray-400 text-muted ms-2">취소</a>
+              <button type="button" id="cancel-pay-button"
+                      class="btn btn-outline-gray-400 text-muted ms-2">취소
+              </button>
             </div>
           </div>
         </div>
@@ -681,7 +459,8 @@
             <div class="col-12">
               <input type="text" class="form-control" placeholder="배송지주소" aria-label="배송지주소"
                      id="address" readonly required>
-              <button type="button" class="btn btn-secondary mt-2" onclick="searchAddress()">주소찾기</button>
+              <button type="button" class="btn btn-secondary mt-2" onclick="searchAddress()">주소찾기
+              </button>
               <div class="invalid-feedback">
                 배송지 주소를 입력해주세요.
               </div>
@@ -702,13 +481,25 @@
               </div>
             </div>
             <div class="col-12 text-end">
-              <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">취소</button>
-              <button class="btn btn-primary" type="submit" id="delivery-info-register-btn">등록</button>
+              <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">취소
+              </button>
+              <button class="btn btn-primary" type="submit" id="delivery-info-register-btn">등록
+              </button>
             </div>
           </div>
         </form>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- 결제처리 spinner -->
+<div id="loadingSpinner" class="loading-spinner-overlay" style="display: none;">
+  <div class="loading-spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="mt-2">결제 처리 중입니다...</div>
   </div>
 </div>
 
@@ -721,9 +512,7 @@
         </div>
         <div class="signup-success-message">
           <h4>결제가 완료되었습니다!</h4>
-          <form action="../pages/nutrofit.html" method="get">
             <button type="submit" class="whitebtn-big margin-10">확인</button>
-          </form>
         </div>
       </div>
     </div>
@@ -994,6 +783,7 @@
 <script th:src="@{/assets/js/vendors/zoom.js}"></script>
 <script th:src="@{/assets/js/vendors/increment-value.js}"></script>
 <script th:src="@{/assets/js/vendors/nutrofit-checkout.js}"></script>
+<script th:src="@{/assets/js/vendors/nutrofit-payment.js}"></script>
 
 </body>
 

@@ -36,10 +36,10 @@ public class CheckoutController {
 
   @GetMapping("/checkout/requirement/get")
   public ResponseEntity<?> getRequirement(@AuthenticationPrincipal MemberBasic memberBasic) {
-    try{
+    try {
       String requirement = checkoutService.getDeliveryRequirement(memberBasic.getId());
       return ResponseEntity.ok(requirement);
-    } catch (Exception e){
+    } catch (Exception e) {
       return ResponseEntity.badRequest().body("주문요청사항 데이터 로드 중 에러 발생");
     }
   }

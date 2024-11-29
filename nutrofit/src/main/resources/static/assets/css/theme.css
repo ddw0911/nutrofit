@@ -2888,7 +2888,7 @@
 
 .text-danger {
   --fc-text-opacity: 1;
-  color: rgba(var(--fc-danger-rgb), var(--fc-text-opacity)) !important;
+  color: #fe4923 !important;
 }
 
 .text-light {
@@ -3121,7 +3121,7 @@
 
 .bg-danger {
   --fc-bg-opacity: 1;
-  background-color: rgba(var(--fc-danger-rgb), var(--fc-bg-opacity)) !important;
+  background-color: #fe4923 !important;
 }
 
 .bg-light {
@@ -12262,7 +12262,7 @@ div.zoom:hover {
   --fc-success: #FE4923;
   --fc-info: #016bf8;
   --fc-warning: #ffc107;
-  --fc-danger: #db3030;
+  --fc-danger: #fe4923;
   --fc-light: #f0f3f2;
   --fc-dark: #001e2b;
   --fc-gray-400: #c1c7c6;
@@ -12275,7 +12275,7 @@ div.zoom:hover {
   --fc-dark-primary: #FE4923;
   --fc-dark-warning: #664d03;
   --fc-dark-info: #002b63;
-  --fc-dark-danger: #581313;
+  --fc-dark-danger: #fe4923;
   --fc-dark-success: #FE4923;
   --fc-dark-secondary: #ecf0ef;
   --fc-indigo: #6610f2;
@@ -12289,7 +12289,7 @@ div.zoom:hover {
   --fc-success-rgb: #FE4923;
   --fc-info-rgb: 1, 107, 248;
   --fc-warning-rgb: 255, 193, 7;
-  --fc-danger-rgb: 219, 48, 48;
+  --fc-danger-rgb: #fe4923;
   --fc-light-rgb: 240, 243, 242;
   --fc-dark-rgb: 0, 30, 43;
   --fc-gray-400-rgb: 193, 199, 198;
@@ -12316,7 +12316,7 @@ div.zoom:hover {
   --fc-success-text: #FE4923;
   --fc-info-text: #014095;
   --fc-warning-text: #997404;
-  --fc-danger-text: #af2626;
+  --fc-danger-text: #fe4923;
   --fc-light-text: #5c6c75;
   --fc-dark-text: #3d4f58;
   --fc-primary-bg-subtle: #ceefce;
@@ -24354,6 +24354,7 @@ textarea.form-control-lg {
 
 .text-decoration-line-through {
   text-decoration: line-through !important;
+  text-decoration-color : #fe4923 !important;
 }
 
 .text-lowercase {
