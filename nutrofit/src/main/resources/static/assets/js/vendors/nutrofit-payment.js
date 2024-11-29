@@ -1,78 +1,199 @@
 // 토스페이 브랜드페이 api
 // 전역 함수로 선언
 window.initializePayment = async function() {
+   const DELIVERY_INFO_KEY = 'deliveryInfo';
+   const TOTAL_AMOUNT_KEY = 'totalAmount';
 
-  try {
-  const payButton = document.getElementById('pay-button');
-  const cancelButton = document.getElementById('cancel-pay-button');
-  const clientKey = "test_ck_DnyRpQWGrNzpeZ5kkmblrKwv1M9E";
+   const payButton = document.getElementById('pay-button');
+   const cancelButton = document.getElementById('cancel-pay-button');
+   const clientKey = "test_ck_DnyRpQWGrNzpeZ5kkmblrKwv1M9E";
 
-    // TossPayments 인스턴스 생성
-    const tossPayments = TossPayments(clientKey);
+   try {
+       // TossPayments 인스턴스 생성
+       const tossPayments = TossPayments(clientKey);
 
-    // 고객키 생성
-    const customerKey = uuid.v4().replace(/-/g, '');
-    console.log("customerKey :", customerKey);
+       // 고객키 생성
+       const customerKey = uuid.v4().replace(/-/g, '');
+       console.log("customerKey :", customerKey);
 
+       // 결제창 초기화
+       const payment = tossPayments.payment({ customerKey });
 
-    const payment = tossPayments.payment({
-          customerKey,
-        });
+       // 결제 금액 설정
+       const totalAmount = Number(sessionStorage.getItem(TOTAL_AMOUNT_KEY));
+       console.log("총 결제예정금액 :", totalAmount);
 
-    // 결제 금액 설정
-    const totalAmount = Number(sessionStorage.getItem('payment'));
+       // 결제 버튼 이벤트 리스너 설정
+       payButton.addEventListener("click", async function() {
+           try {
+               // 결제동의 체크박스 검증
+               const paymentCheckbox = document.getElementById("payment-agree-checkbox");
+               if (!paymentCheckbox.checked) {
+                   alert("결제 내용을 확인하고 동의해 주세요.");
+                   return;
+               }
 
-    console.log("총 결제예정금액 :",totalAmount);
+               // 회원 데이터 준비
+               const member = localStorage.getItem('member');
+               const memberData = member.replace('MemberBasic', '')
+                   .slice(1, -1)
+                   .split(', ')
+                   .reduce((obj, pair) => {
+                       const [key, value] = pair.split('=');
+                       obj[key] = value;
+                       return obj;
+                   }, {});
 
-    // 결제 버튼 이벤트 리스너 설정
-    payButton.addEventListener("click", async function () {
-        const member = localStorage.getItem('member');
-        const memberData = member.replace('MemberBasic', '')  // MemberBasic 텍스트 제거
-            .slice(1, -1)  // 첫 괄호와 마지막 괄호 제거
-            .split(', ')  // 쉼표로 분리
-            .reduce((obj, pair) => {
-                const [key, value] = pair.split('=');
-                obj[key] = value;
-                return obj;
-            }, {});
+               // 주문 데이터 준비
+               const uniqueId = uuid.v4().replace(/-/g, '').substring(0, 8);
+               const orderId = new Date().getTime() + uniqueId;
+               const orderItems = JSON.parse(localStorage.getItem('orderItems'));
+               const firstItemName = orderItems[0].name;
+               const orderItemCount = orderItems.length - 1;
+               const orderName = `${firstItemName} 외 ${orderItemCount} 건`;
+               sessionStorage.setItem('orderName', orderName);
+               console.log('주문이름 : ', orderName);
 
-        const uniqueId = uuid.v4().replace(/-/g, '').substring(0, 8);
-        const orderId = new Date().getTime() + uniqueId;
-        const firstItemName = JSON.parse(localStorage.getItem('orderItems'))[0].name;
-        const orderItemCount = JSON.parse(localStorage.getItem('orderItems')).length - 1;
-        const orderName = `${firstItemName} 외 ${orderItemCount} 건`;
-        console.log('주문이름 : ',orderName);
+               // 결제 요청
+               await payment.requestPayment({
+                   method: "CARD",
+                   amount: {
+                       currency: 'KRW',
+                       value: totalAmount,
+                   },
+                   orderId: orderId,
+                   orderName: orderName,
+                   successUrl: window.location.origin + "/payment?success=true",
+                   failUrl: window.location.origin + "/api/order/payment?success=false",
+                   customerName: memberData.name,
+                   customerEmail: memberData.email,
+                   card: {
+                       useEscrow: false,
+                       flowMode: "DEFAULT",
+                       useCardPoint: false,
+                       useAppCardOnly: false,
+                   },
+               });
 
+           } catch (error) {
+               console.error("결제 처리 중 오류 발생:", error);
+               alert('결제 처리 중 오류가 발생했습니다.');
+           }
+       });
 
-            await payment.requestPayment({
-                method: "CARD",
-                amount: {
-                    currency: 'KRW',
-                    value: totalAmount,
-                  },
-                orderId: orderId,
-                orderName: orderName,
-                successUrl: window.location.origin + "/",
-                failUrl: window.location.origin + "/shop-checkout",
-                customerName: memberData.name,
-                customerEmail: memberData.email,
-                card: {
-                  useEscrow: false,
-                  flowMode: "DEFAULT", // 통합결제창 여는 옵션
-                  useCardPoint: false,
-                  useAppCardOnly: false,
-                },
-              });
-            });
+   } catch (error) {
+       console.error("결제 초기화 중 오류 발생:", error);
+       alert('결제 시스템을 초기화하는 중 오류가 발생했습니다.');
+   }
 
-  } catch (error){
-    console.error("결제 API 를 불러오는 도중 문제가 발생하였습니다.", error);
-  }
+   // 장바구니 업데이트 함수
+   function updateCart() {
+       const orderItems = JSON.parse(localStorage.getItem('orderItems'));
+       const cartItems = JSON.parse(localStorage.getItem('cart'));
+
+       if (cartItems && orderItems) {
+           const updatedCart = cartItems.filter(cartItem =>
+               !orderItems.some(orderItem =>
+                   orderItem.id === cartItem.id &&
+                   orderItem.selectedPortion === cartItem.selectedPortion
+               )
+           );
+           localStorage.setItem('cart', JSON.stringify(updatedCart));
+       }
+   }
+
+   // 세션 정리 함수
+   function cleanupSession() {
+       sessionStorage.clear();
+       localStorage.removeItem('orderItems');
+   }
 };
+
+// 모달 확인 버튼 클릭 이벤트
+document.getElementById('payment-success-ok')?.addEventListener('click', async function() {
+   try {
+       const deliveryInfo = JSON.parse(sessionStorage.getItem('deliveryInfo'));
+
+       const orderItemInfo = JSON.parse(localStorage.getItem('orderItems')).map(item => ({
+           productId: item.id,               // 상품 ID
+           quantity: item.quantity,          // 수량
+           portion: item.selectedPortion,    // 선택된 portion (예: "1인분")
+           total: item.price * item.quantity // 해당 상품의 총 금액
+       }));
+
+       const orderData = {
+           memberId: deliveryInfo.memberId,
+           orderName: sessionStorage.getItem('orderName'),  // 이 변수는 별도로 저장해두어야 함
+           name: deliveryInfo.name,
+           phone: deliveryInfo.phone,
+           address: `${deliveryInfo.address} ${deliveryInfo.detailAddress}`,
+           requirement: deliveryInfo.requirement,
+           total: sessionStorage.getItem('totalAmount'),
+           orderItems: orderItemInfo,
+       };
+
+       const paymentData = {
+           api: "TOSS",  // 카드 결제로 고정
+           total: sessionStorage.getItem('totalAmount'),
+       };
+
+       console.table(orderData);
+       console.table(paymentData);
+
+       // 주문 정보 서버 전송
+       const serverResponse = await fetch('/api/order/payment/save', {
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+               orderData: orderData,
+               paymentData: paymentData
+           })
+       });
+
+       const data = await serverResponse.text();
+       console.log('서버응답 : ', data);
+
+       // 장바구니에서 주문 상품 제거
+       const orderItems = JSON.parse(localStorage.getItem('orderItems'));
+       const cartItems = JSON.parse(localStorage.getItem('cart'));
+
+       if (cartItems && orderItems) {
+           const updatedCart = cartItems.filter(cartItem =>
+               !orderItems.some(orderItem =>
+                   orderItem.id === cartItem.id &&
+                   orderItem.selectedPortion === cartItem.selectedPortion
+               )
+           );
+           localStorage.setItem('cart', JSON.stringify(updatedCart));
+       }
+
+       // 세션 정리
+       sessionStorage.clear();
+       localStorage.removeItem('orderItems');
+
+       // 홈페이지로 이동
+       window.location.href = '/';
+
+   } catch (error) {
+       console.error('주문 처리 중 오류 발생:', error);
+       alert('주문 처리 중 오류가 발생했습니다.');
+   }
+});
 
 // DOM 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
-  window.initializePayment().catch(error => {
-    console.error('결제 위젯 초기화 실패:', error);
-  });
+   // URL 파라미터 체크
+   const urlParams = new URLSearchParams(window.location.search);
+   if (urlParams.get('payment') === 'success') {
+       // 결제 성공 모달 표시
+       const paymentSuccessMessage = new bootstrap.Modal(document.getElementById('PaymentSuccessModal'));
+       paymentSuccessMessage.show();
+   }
+
+   // 결제 초기화
+   window.initializePayment().catch(error => {
+       console.error('결제 위젯 초기화 실패:', error);
+   });
 });
