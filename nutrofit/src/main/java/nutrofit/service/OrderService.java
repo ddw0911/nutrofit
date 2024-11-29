@@ -1,8 +1,8 @@
 package nutrofit.service;
 
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import nutrofit.domain.entity.member.MemberBasic;
 import nutrofit.domain.entity.orders.OrderItem;
 import nutrofit.domain.entity.orders.Orders;
@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Log4j2
 public class OrderService {
 
   private final MemberBasicRepository memberBasicRepository;
@@ -31,15 +32,16 @@ public class OrderService {
   private final ProductRepository productRepository;
   private final PaymentRepository paymentRepository;
 
-  public void saveOrders(Long memberId, List<OrderItemDTO> orderItems, OrdersDTO order) {
+  public void saveOrderAndPayment(Long memberId, OrdersDTO orderData, PaymentDTO paymentData) {
 
     MemberBasic member = memberBasicRepository.findById(memberId)
         .orElseThrow(ExceptionMessage.NOT_FOUNDED::get);
 
-    Orders newOrder = new Orders(order, member);
+    Orders newOrder = new Orders(orderData, member);
     ordersRepository.save(newOrder);
+    log.info("주문정보 데이터 저장 완료");
 
-    for (OrderItemDTO orderItem : orderItems) {
+    for (OrderItemDTO orderItem : orderData.getOrderItems()) {
       Product product = productRepository.findById(orderItem.getProductId()).orElseThrow(
           ExceptionMessage.NOT_FOUNDED::get);
 
@@ -53,19 +55,15 @@ public class OrderService {
 
       orderItemRepository.save(item);
     }
-  }
+    log.info("주문상품 데이터 저장 완료");
 
-  public void savePayment(OrdersDTO order, PaymentDTO payment) {
-
-    Orders orderInfo = ordersRepository.findById(order.getOrdersId())
-        .orElseThrow(ExceptionMessage.NOT_FOUNDED::get);
-
-    Payment newPayment = Payment.builder()
-        .orders(orderInfo)
-        .api(payment.getApi())
-        .total(payment.getTotal())
+    Payment paymentInfo = Payment.builder()
+        .orders(newOrder)
+        .api(paymentData.getApi())
+        .total(paymentData.getTotal())
         .build();
 
-    paymentRepository.save(newPayment);
+    paymentRepository.save(paymentInfo);
+    log.info("결제 데이터 저장 완료");
   }
 }

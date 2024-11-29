@@ -16,6 +16,7 @@ public class OrdersDTO {
 
   private Long ordersId;
   private Long memberId;
+  private String orderName;
   private String name;
   private String phone;
   private String address;
@@ -27,6 +28,7 @@ public class OrdersDTO {
   public OrdersDTO(Orders orders) {
     this.ordersId = orders.getOrdersId();
     this.memberId = orders.getMemberBasic().getId();
+    this.orderName = orders.getOrderName();
     this.name = orders.getName();
     this.phone = orders.getPhone();
     this.address = orders.getAddress();

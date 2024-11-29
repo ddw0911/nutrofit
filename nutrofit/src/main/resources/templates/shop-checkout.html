@@ -206,7 +206,7 @@
                           <!-- collapse -->
                           <a href="#" class="btn btn-primary ms-2" data-bs-toggle="collapse"
                              data-bs-target="#flush-collapseThree" aria-expanded="false"
-                             aria-controls="flush-collapseThree">다음</a>
+                             aria-controls="flush-collapseThree" id="check-delivery-info">다음</a>
                         </div>
                       </div>
                     </div>
@@ -229,10 +229,10 @@
                      data-bs-parent="#accordionFlushExample">
                   <div>
                     <select class="order-requirement-select black-75">
-                      <option value="새벽 배송 시 벨 누르지 말고 놓고 가주세요">새벽 배송 시 벨 누르지 말고 놓고 가주세요</option>
+                      <option value="새벽 배송 시 벨 누르지 말고 놓고 가주세요" selected>새벽 배송 시 벨 누르지 말고 놓고 가주세요</option>
+                      <option value="문 앞에 놓고 가주세요">문 앞에 놓고 가주세요</option>
                       <option value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</option>
                       <option value="부재 시 연락바랍니다">부재 시 연락바랍니다</option>
-                      <option value="문 앞에 놓고 가주세요">문 앞에 놓고 가주세요</option>
                       <option value="직접 입력">직접 입력</option>
                       <option value="없음">없음</option>
                     </select>
@@ -245,7 +245,7 @@
                     </label>
                     </div>
                   </div>
-                  <div><textarea class="order-requirement-select" placeholder="여기에 입력해주세요"
+                  <div><textarea class="order-requirement-select black-75" id="input-in-person" placeholder="여기에 입력해주세요"
                                  hidden></textarea></div>
                   <div class="mt-5 d-flex justify-content-end margin-0">
                     <a href="#" class="btn btn-outline-gray-400 text-muted"
@@ -510,9 +510,9 @@
       <div class="modal-body p-8">
         <div class="position-absolute top-0 end-0 me-3 mt-3">
         </div>
-        <div class="signup-success-message">
+        <div class="payment-success-message">
           <h4>결제가 완료되었습니다!</h4>
-            <button type="submit" class="whitebtn-big margin-10">확인</button>
+            <button type="button" class="whitebtn-big margin-10" id="payment-success-ok">확인</button>
         </div>
       </div>
     </div>

@@ -35,6 +35,8 @@ public class Orders {
   @ManyToOne
   @JoinColumn(name="member_id", nullable = false)
   private MemberBasic memberBasic;
+  @Column(name="order_name")
+  private String orderName;
   private String name;
   private String phone;
   private String address;
@@ -46,7 +48,8 @@ public class Orders {
   private LocalDateTime orderDate;
 
   public Orders(OrdersDTO order, MemberBasic member) {
-    this.memberBasic = new MemberBasic();
+    this.memberBasic = member;
+    this.orderName = order.getOrderName();
     this.name = order.getName();
     this.phone = order.getPhone();
     this.address = order.getAddress();

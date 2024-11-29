@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DeliveryInfoDTO {
 
-  private String email;
   private String name;
   private String phone;
   private String address;
