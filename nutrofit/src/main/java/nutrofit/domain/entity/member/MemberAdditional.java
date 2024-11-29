@@ -1,8 +1,5 @@
 package nutrofit.domain.entity.member;
 
-import nutrofit.domain.enums.MealCategory;
-import nutrofit.domain.enums.MealPortion;
-import nutrofit.domain.enums.SNS;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,6 +14,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import nutrofit.domain.enums.MealCategory;
+import nutrofit.domain.enums.MealPortion;
+import nutrofit.domain.enums.SNS;
 
 @Entity
 @Table(name = "member_additional")

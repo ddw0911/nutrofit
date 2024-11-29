@@ -44,6 +44,7 @@ public class Product {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name="category_id")
   private Category category;
+
   @Enumerated(EnumType.STRING)
   @Column(name="menu_type")
   private MenuType type;

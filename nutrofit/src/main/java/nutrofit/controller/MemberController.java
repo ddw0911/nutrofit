@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequiredArgsConstructor
 @Log4j2
-public class MemberApiController {
+public class MemberController {
 
   private final MemberBasicRepository memberBasicRepository;
   private final SignupService signupService;
