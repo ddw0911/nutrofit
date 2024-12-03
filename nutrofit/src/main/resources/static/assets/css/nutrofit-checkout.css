@@ -16,7 +16,7 @@
 }
 
 .order-requirement{
-    padding: 1rem 0 0 1.5rem;
+    padding: 1rem 1.25rem 0 1.5rem;
 }
 
 .order-requirement div{
@@ -27,6 +27,7 @@
     width: 100%;
     padding : 0.5rem;
     border-radius: 5px;
+    border : 1px solid #dfe2e1 !important;
 }
 
 .payment-api{

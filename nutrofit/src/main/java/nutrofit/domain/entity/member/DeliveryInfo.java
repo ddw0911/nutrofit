@@ -41,7 +41,7 @@ public class DeliveryInfo {
   @Builder
   public DeliveryInfo(MemberBasic memberBasic) {
     this.memberBasic = Objects.requireNonNull(memberBasic);
-    // @MapsId가 memberBasic의 ID를 memberId로 자동 매핑
+    // @MapsId가 memberBasic 의 ID를 memberId로 자동 매핑
   }
 
   public void update(DeliveryInfoDTO dto) {

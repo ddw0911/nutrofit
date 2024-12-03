@@ -1,9 +1,41 @@
-// 토스페이 브랜드페이 api
-// 전역 함수로 선언
-window.initializePayment = async function() {
-   const DELIVERY_INFO_KEY = 'deliveryInfo';
-   const TOTAL_AMOUNT_KEY = 'totalAmount';
+// 멤버 데이터 가져오기
+function getMemberData() {
+   const member = localStorage.getItem('member');
+   return member.replace('MemberBasic', '')
+       .slice(1, -1)
+       .split(', ')
+       .reduce((obj, pair) => {
+           const [key, value] = pair.split('=');
+           obj[key] = value;
+           return obj;
+       }, {});
+}
 
+// 주문한 상품은 장바구니에서 삭제
+async function removeOrderedItemsFromCart(orderItems) {
+    const memberId = getMemberData().id;
+
+    for (const orderItem of orderItems) {
+        const portion = orderItem.selectedPortion === '1인분' ? 'ONE' :
+                       orderItem.selectedPortion === '2인분' ? 'TWO' : 'FOUR';
+        try {
+            await fetch(`/api/cart/${memberId}/delete/${orderItem.id}/${portion}`, {
+                method: 'DELETE'
+            });
+        } catch (error) {
+            console.error('장바구니 항목 삭제 실패:', error);
+        }
+    }
+}
+
+// 세션 정리 함수
+function cleanupSession() {
+   sessionStorage.clear();
+   localStorage.removeItem('orderItems');
+}
+
+// 토스페이 브랜드페이 api
+window.initializePayment = async function() {
    const payButton = document.getElementById('pay-button');
    const cancelButton = document.getElementById('cancel-pay-button');
    const clientKey = "test_ck_DnyRpQWGrNzpeZ5kkmblrKwv1M9E";
@@ -20,7 +52,7 @@ window.initializePayment = async function() {
        const payment = tossPayments.payment({ customerKey });
 
        // 결제 금액 설정
-       const totalAmount = Number(sessionStorage.getItem(TOTAL_AMOUNT_KEY));
+       const totalAmount = Number(sessionStorage.getItem('totalAmount'));
        console.log("총 결제예정금액 :", totalAmount);
 
        // 결제 버튼 이벤트 리스너 설정
@@ -34,15 +66,7 @@ window.initializePayment = async function() {
                }
 
                // 회원 데이터 준비
-               const member = localStorage.getItem('member');
-               const memberData = member.replace('MemberBasic', '')
-                   .slice(1, -1)
-                   .split(', ')
-                   .reduce((obj, pair) => {
-                       const [key, value] = pair.split('=');
-                       obj[key] = value;
-                       return obj;
-                   }, {});
+               const memberData = getMemberData();
 
                // 주문 데이터 준비
                const uniqueId = uuid.v4().replace(/-/g, '').substring(0, 8);
@@ -85,28 +109,6 @@ window.initializePayment = async function() {
        console.error("결제 초기화 중 오류 발생:", error);
        alert('결제 시스템을 초기화하는 중 오류가 발생했습니다.');
    }
-
-   // 장바구니 업데이트 함수
-   function updateCart() {
-       const orderItems = JSON.parse(localStorage.getItem('orderItems'));
-       const cartItems = JSON.parse(localStorage.getItem('cart'));
-
-       if (cartItems && orderItems) {
-           const updatedCart = cartItems.filter(cartItem =>
-               !orderItems.some(orderItem =>
-                   orderItem.id === cartItem.id &&
-                   orderItem.selectedPortion === cartItem.selectedPortion
-               )
-           );
-           localStorage.setItem('cart', JSON.stringify(updatedCart));
-       }
-   }
-
-   // 세션 정리 함수
-   function cleanupSession() {
-       sessionStorage.clear();
-       localStorage.removeItem('orderItems');
-   }
 };
 
 // 모달 확인 버튼 클릭 이벤트
@@ -123,7 +125,7 @@ document.getElementById('payment-success-ok')?.addEventListener('click', async f
 
        const orderData = {
            memberId: deliveryInfo.memberId,
-           orderName: sessionStorage.getItem('orderName'),  // 이 변수는 별도로 저장해두어야 함
+           orderName: sessionStorage.getItem('orderName'),
            name: deliveryInfo.name,
            phone: deliveryInfo.phone,
            address: `${deliveryInfo.address} ${deliveryInfo.detailAddress}`,
@@ -134,10 +136,10 @@ document.getElementById('payment-success-ok')?.addEventListener('click', async f
 
        const paymentData = {
            api: "TOSS",  // 카드 결제로 고정
-           total: sessionStorage.getItem('totalAmount'),
+           total: Number(sessionStorage.getItem('totalAmount')),
        };
 
-       console.table(orderData);
+       console.log(JSON.stringify(orderData, null, 2)); // JSON 문자열 출력
        console.table(paymentData);
 
        // 주문 정보 서버 전송
@@ -148,7 +150,7 @@ document.getElementById('payment-success-ok')?.addEventListener('click', async f
            },
            body: JSON.stringify({
                orderData: orderData,
-               paymentData: paymentData
+               paymentData: paymentData,
            })
        });
 
@@ -160,6 +162,7 @@ document.getElementById('payment-success-ok')?.addEventListener('click', async f
        const cartItems = JSON.parse(localStorage.getItem('cart'));
 
        if (cartItems && orderItems) {
+           // 로컬 장바구니 업데이트
            const updatedCart = cartItems.filter(cartItem =>
                !orderItems.some(orderItem =>
                    orderItem.id === cartItem.id &&
@@ -167,11 +170,13 @@ document.getElementById('payment-success-ok')?.addEventListener('click', async f
                )
            );
            localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+           // 서버 장바구니 업데이트
+           await removeOrderedItemsFromCart(orderItems);
        }
 
        // 세션 정리
-       sessionStorage.clear();
-       localStorage.removeItem('orderItems');
+       cleanupSession();
 
        // 홈페이지로 이동
        window.location.href = '/';

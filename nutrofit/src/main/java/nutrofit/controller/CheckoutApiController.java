@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/")
 @Log4j2
-public class CheckoutController {
+public class CheckoutApiController {
 
   private final CheckoutService checkoutService;
 

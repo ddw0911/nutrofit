@@ -14,22 +14,23 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import java.time.LocalDateTime;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import nutrofit.domain.entity.member.MemberBasic;
-import nutrofit.domain.enums.DiscountRate;
 import nutrofit.domain.enums.MealPortion;
 import nutrofit.dto.CartItemDTO;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cart_item")
 @EntityListeners(value={AuditingEntityListener.class})
+@Builder
 public class CartItem {
 
   @Id
@@ -50,10 +51,7 @@ public class CartItem {
 
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
-  private MealPortion portion; // 1회제공량 (예: "ONE", "TWO", "FOUR")
-
-  @Enumerated(EnumType.STRING)
-  private DiscountRate discount; // 할인 여부 ("THREE", "SEVEN", "PER_ITEM")
+  private MealPortion portion; // 1회제공량 ("ONE", "TWO", "FOUR")
 
   @Min(0)
   private int total; // 총 가격
@@ -67,7 +65,6 @@ public class CartItem {
     this.product = product;
     this.quantity = dto.getQuantity();
     this.portion = MealPortion.getEnum(dto.getPortion());
-    this.discount = DiscountRate.getEnum(dto.getDiscount());
     this.total = dto.getTotal();
     this.regDate = LocalDateTime.now();
   }

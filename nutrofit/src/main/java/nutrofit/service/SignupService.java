@@ -44,12 +44,12 @@ public class SignupService {
 
     if (optional != null) {
       MemberAdditional additionalInfo = MemberAdditional.builder()
+          .memberBasic(requiredInfo)
           .category(optional.getCategory())
           .portion(optional.getPortion())
           .sns(optional.getSns())
           .build();
 
-      additionalInfo.setMemberBasic(requiredInfo);
       memberAdditionalRepository.save(additionalInfo);
     }
     return requiredInfo.getId();

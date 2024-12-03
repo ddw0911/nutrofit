@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/menu")
 @RequiredArgsConstructor
 @Log4j2
-public class ProductController {
+public class ProductApiController {
 
   private final ProductService productService;
 

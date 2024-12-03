@@ -1,7 +1,6 @@
 package nutrofit.service;
 
 import jakarta.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,29 +59,12 @@ public class CartService {
     }
   }
 
-  public void removeCartItem(Long memberId, Long productId) {
-    CartItem cartItem = cartItemRepository.findByMember_IdAndId(memberId, productId)
+  public void removeCartItem(Long memberId, Long productId, MealPortion portion) {
+    CartItem cartItem = cartItemRepository.findByMember_IdAndProduct_IdAndPortion(memberId, productId, portion)
         .orElseThrow(ExceptionMessage.NOT_FOUNDED::get);
 
     cartItemRepository.delete(cartItem);
-    log.info(cartItem.getProduct().getName() + " 장바구니 목록에서 제거");
-  }
-
-  public void removeOrderedItems(Long memberId, List<CartItemDTO> orderedList) {
-    List<CartItem> itemsToRemove = new ArrayList<>();
-
-    for (CartItemDTO orderedItem : orderedList) {
-      CartItem cartItem = cartItemRepository.findByMember_IdAndId(memberId, orderedItem.getId())
-          .orElseThrow(ExceptionMessage.NOT_FOUNDED::get);
-      if (cartItem != null) {
-        itemsToRemove.add(cartItem);
-      }
-    }
-
-    if (!itemsToRemove.isEmpty()) {
-      cartItemRepository.deleteAll(itemsToRemove);
-      log.info("장바구니 내 주문 완료 상품 삭제");
-    }
+    log.info("{} 장바구니 목록에서 제거", cartItem.getProduct().getName());
   }
 
   public void syncCart(Long memberId, List<CartItemDTO> cartItems) {

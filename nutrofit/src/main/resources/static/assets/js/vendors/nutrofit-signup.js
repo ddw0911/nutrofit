@@ -73,7 +73,7 @@ function checkEmailDuplicated() {
     });
   });
 
-     // 회원가입 - 1회 제공량 선택
+  // 회원가입 - 1회 제공량 선택
   document.querySelectorAll('.portion-btn').forEach(button => {
      button.addEventListener('click', function() {
      document.querySelectorAll('.portion-btn').forEach(btn => btn.classList.remove('active'));
@@ -82,8 +82,8 @@ function checkEmailDuplicated() {
      });
   });
 
-// 회원가입 - 폼 제출 전 필수항목 검사 및 가입 성공메시지 모달
-document.addEventListener('DOMContentLoaded', function () {
+  // 회원가입 - 폼 제출 전 필수항목 검사 및 가입 성공메시지 모달
+  document.addEventListener('DOMContentLoaded', function () {
     const signupForm = document.getElementById('signup-form');
 
     // 모달 초기화

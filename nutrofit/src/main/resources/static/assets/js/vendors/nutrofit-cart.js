@@ -130,7 +130,7 @@ const cartManager = {
         console.log(memberId," 장바구니 동기화 시도")
 
     const serverCartItems = cart.map(item => ({
-         productId: item.id,          // 제품ID (product_id)
+         productId: item.id,
          memberId: memberId,
          quantity: parseInt(item.quantity),      // 수량 (quantity)
          portion: item.selectedPortion === '1인분' ? 'ONE' :
@@ -281,14 +281,38 @@ const cartManager = {
       });
     },
 
-    // 상품 삭제
-    removeItem(itemId, selectedPortion) {
-      const cart = this.getCart();
-      const updatedCart = cart.filter(item =>
-        !(item.id === itemId && item.selectedPortion === selectedPortion)
-      );
-      this.saveCart(updatedCart);
-      this.updateCartUI();
+    async removeItem(itemId, selectedPortion) {
+        // 로컬 장바구니에서 삭제
+        const cart = this.getCart();
+        const updatedCart = cart.filter(item =>
+            !(item.id === itemId && item.selectedPortion === selectedPortion)
+        );
+
+        // 로그인한 사용자인 경우 서버에서도 삭제
+        if (this.isUserLoggedIn()) {
+            const memberId = this.getMemberId();
+            const portion = selectedPortion === '1인분' ? 'ONE' :
+                               selectedPortion === '2인분' ? 'TWO' : 'FOUR';
+            try {
+                const response = await fetch(`/api/cart/${memberId}/delete/${itemId}/${portion}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('서버에서 상품 삭제 실패');
+                }
+                console.log('서버에서 상품 삭제 완료');
+            } catch (error) {
+                console.error('서버 통신 오류:', error);
+            }
+        }
+
+        // 로컬 장바구니 업데이트 및 UI 갱신
+        this.saveCart(updatedCart);
+        this.updateCartUI();
     },
 
     // 수량 업데이트
@@ -313,17 +337,36 @@ const cartManager = {
         this.updateCartUI();
     },
 
-    // 1회 제공량 업데이트
-    updatePortion(itemId, newPortion) {
-        const cart = this.getCart();
-        const item = cart.find(item => item.id === itemId);
+// 1회 제공량 옵션 업데이트 시
+  async updatePortion(itemId, newPortion) {
+    const cart = this.getCart();
+    const oldItem = cart.find(item => item.id === itemId);
 
-        if (!item) return;
+    if (!oldItem) return;
 
-        item.selectedPortion = newPortion;
-        this.saveCart(cart);
-        this.updateCartUI();  // 여기서 전체 UI를 다시 그림
+    // 1. 기존 항목 삭제 (서버)
+    if (this.isUserLoggedIn()) {
+        const memberId = this.getMemberId();
+        const oldPortion = oldItem.selectedPortion === '1인분' ? 'ONE' :
+                          oldItem.selectedPortion === '2인분' ? 'TWO' : 'FOUR';
+        try {
+            await fetch(`/api/cart/${memberId}/delete/${itemId}/${oldPortion}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (error) {
+            console.error('서버에서 기존 항목 삭제 실패:', error);
+            return;
+        }
     }
+
+    // 2. 새로운 항목으로 업데이트
+    oldItem.selectedPortion = newPortion;
+    this.saveCart(cart);  // 이 메서드에서 서버 동기화(syncCartWithServer)도 처리됨
+    this.updateCartUI();
+  }
 };
 
 // 슬라이더에서 간편 담기 (+ 버튼)
@@ -380,9 +423,10 @@ document.getElementById('quickViewModal').addEventListener('hidden.bs.modal', ()
   updateTotalPrice();
 });
 
+// 주문하러 가기 버튼 클릭 시
 document.getElementById('proceed-checkout').addEventListener('click', async () =>{
   try {
-          const response = await fetch('/api/auth/status');
+          const response = await fetch('/api/member/status');
           const isLoggedIn = await response.json();
           const cart = JSON.parse(localStorage.getItem('cart'));
 

@@ -44,7 +44,7 @@ function scrollToItemList() {
   requestAnimationFrame(animateScroll); // 애니메이션 시작
 }
 
-// 로그인 시 세션스토리지에 정보 저장
+// 로그인 시 세션스토리지에 회원정보 저장
   document.addEventListener("DOMContentLoaded", function() {
         const isLoggedIn = document.body.getAttribute('data-user-logged-in') === 'true';
 
@@ -54,7 +54,7 @@ function scrollToItemList() {
                 localStorage.setItem("member", member);
             }
         } else {
-            // 로그아웃 상태일 때 세션스토리지에서 제거
+            // 로그아웃할 때 로컬스토리지에서 제거
             localStorage.removeItem("member");
         }
   });

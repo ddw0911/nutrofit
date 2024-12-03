@@ -24,5 +24,4 @@ public class MemberAdditionalDTO {
     this.portion = memberAdditionalEntity.getPortion();
     this.sns = memberAdditionalEntity.getSns();
   }
-
 }

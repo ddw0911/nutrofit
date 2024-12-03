@@ -17,7 +17,6 @@ public class CartItemDTO {
   private Long productId; // 제품 ID
   private Integer quantity; // 수량
   private String portion; // 제공량
-  private String discount; // 할인
   private Integer total; // 총 가격
   private LocalDateTime regDate;
 
@@ -27,7 +26,6 @@ public class CartItemDTO {
     this.productId = cartItem.getProduct().getId();
     this.quantity = cartItem.getQuantity();
     this.portion = cartItem.getPortion().get();
-    this.discount = cartItem.getDiscount().get();
     this.total = cartItem.getTotal();
     this.regDate = cartItem.getRegDate();
   }

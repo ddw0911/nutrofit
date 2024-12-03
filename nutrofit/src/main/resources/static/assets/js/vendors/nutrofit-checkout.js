@@ -124,37 +124,36 @@ document.querySelector('.order-requirement-select').addEventListener('change', f
   }
 });
 
-// 배송요청사항 - 다음에도 사용 체크 시 서버에 저장
-document.getElementById('delivery-requirement-to-next').addEventListener('click', async function(){
-  const useNext = document.getElementById('requirement-use-next').checked;
-  const selectedRequirement = document.querySelector('.order-requirement-select');
+document.getElementById('requirement-use-next').addEventListener('change', async function() {
+    const useNext = this.checked;
+    const selectedRequirement = document.querySelector('.order-requirement-select');
 
-  let requirementValue='';
-  if (useNext) {
-    if(selectedRequirement.value === '직접 입력'){
-      const inPerson = document.querySelector('textarea.order-requirement-select');
-      inPerson.hidden=false;
-      requirementValue = inPerson.value;
-    } else {
-      document.querySelector('textarea.order-requirement-select').hidden = true;
-      requirementValue = selectedRequirement.value;
-    }
-  }
+    let requirementValue = '';
+    if (useNext) {
+        if (selectedRequirement.value === '직접 입력') {
+            const inPerson = document.querySelector('textarea.order-requirement-select');
+            inPerson.hidden = false;
+            requirementValue = inPerson.value;
+        } else {
+            document.querySelector('textarea.order-requirement-select').hidden = true;
+            requirementValue = selectedRequirement.value;
+        }
 
-  if(useNext && requirementValue) {
-    try{
-      const response = await fetch('/api/checkout/requirement/save',{
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: requirementValue
-      });
-      console.log('주문요청사항 저장 성공:', requirementValue);
-    } catch (error) {
-      console.error('주문요청사항 저장 실패:', error);
+        if (requirementValue) {
+            try {
+                const response = await fetch('/api/checkout/requirement/save', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: requirementValue
+                });
+                console.log('주문요청사항 저장 성공:', requirementValue);
+            } catch (error) {
+                console.error('주문요청사항 저장 실패:', error);
+            }
+        }
     }
-  }
 });
 
 // 저장된 배송요청사항 불러오기 함수
@@ -301,7 +300,7 @@ class OrderItemsManager {
         const template = document.getElementById('order-item-container').content.cloneNode(true);
 
         // 이미지 설정
-        template.querySelector('#order-item-image').src = item.imageUrl[0];
+        template.querySelector('#order-item-image').src = item.image || item.imageUrl[0];
 
         // 카테고리 설정
         template.querySelector('#order-item-category').textContent = item.category;

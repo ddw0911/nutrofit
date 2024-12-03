@@ -15,20 +15,33 @@ const productManager = {
 };
 
 // 초기 실행
-document.addEventListener('DOMContentLoaded', () => {
-  loadCategoryMenu('BALANCE'); // 초기 카테고리 로드
+document.addEventListener('DOMContentLoaded', async () => {
+  // 회원가입 시 선택한 사항(관심카테고리, 1회제공량)에 맞춰 화면 렌더링
+  try {
+    const response = await fetch("/api/member/category");
+    const category = await response.json();
 
-  // 장바구니 추가 버튼 이벤트 리스너 설정 (DOM이 로드된 후 설정)
-  const addToCartButton = document.getElementById('add-to-cart-button');
-  if (addToCartButton) {
-    addToCartButton.addEventListener('click', () => {
-      addToCart(); // 장바구니에 제품 추가
-      // 필요한 경우 모달 닫기
-      const quickViewModal = bootstrap.Modal.getInstance(document.getElementById('quickViewModal'));
-      if (quickViewModal) {
-        quickViewModal.hide();
-      }
-    });
+    if(category) {
+      loadCategoryMenu(category); // 회원가입 시 선택한 카테고리 로드
+    } else {
+      loadCategoryMenu('BALANCE'); // 없을 시 밸런스식단(default) 로드
+    }
+
+    // 장바구니 추가 버튼 이벤트 리스너 설정
+    const addToCartButton = document.getElementById('add-to-cart-button');
+    if (addToCartButton) {
+      addToCartButton.addEventListener('click', () => {
+        addToCart(); // 장바구니에 제품 추가
+        // 필요한 경우 모달 닫기
+        const quickViewModal = bootstrap.Modal.getInstance(document.getElementById('quickViewModal'));
+        if (quickViewModal) {
+          quickViewModal.hide();
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    loadCategoryMenu('BALANCE'); // 에러 발생시에도 기본값 로드
   }
 });
 

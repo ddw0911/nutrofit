@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/order")
 @RequiredArgsConstructor
 @Log4j2
-public class OrderController {
+public class OrderApiController {
 
   private final OrderService orderService;
 
@@ -29,7 +29,7 @@ public class OrderController {
     OrdersDTO orderData = orderRequestDTO.getOrderData();
     PaymentDTO paymentData = orderRequestDTO.getPaymentData();
 
-    orderService.saveOrderAndPayment(member.getId(), orderData, paymentData);
+    orderService.processOrder(member.getId(), orderData, paymentData);
     return ResponseEntity.ok("주문이 완료되었습니다.");
   }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import nutrofit.domain.entity.member.MemberBasic;
+import nutrofit.domain.enums.MealPortion;
 import nutrofit.dto.CartItemDTO;
 import nutrofit.service.CartService;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/cart")
 @RequiredArgsConstructor
 @Log4j2
-public class CartController {
+public class CartApiController {
 
   private final CartService cartService;
 
@@ -82,31 +83,23 @@ public class CartController {
   @PostMapping("/{memberId}")
   public ResponseEntity<String> addCartItem(@PathVariable(required = false) Long memberId, @RequestBody CartItemDTO cartItemDTO) {
     if (memberId == null || SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
-      // 비로그인 상태 - Local Storage를 통해 임시 저장
+      // 비로그인 상태 - Local Storage 를 통해 임시 저장
       log.info("비로그인 사용자의 임시 장바구니에 상품 추가 요청: {}", cartItemDTO);
       // 장바구니 데이터를 로컬 스토리지에 저장하는 로직 추가
       return ResponseEntity.ok("비로그인 상태에서 장바구니에 상품이 추가되었습니다.");
     }
 
-    cartItemDTO.setMemberId(memberId); // DTO에 회원 ID 설정
+    cartItemDTO.setMemberId(memberId); // DTO 에 회원 ID 설정
     cartService.addCartItem(cartItemDTO);
     log.info("회원 ID {}의 장바구니에 항목 추가: {}", memberId, cartItemDTO);
     return ResponseEntity.ok("장바구니에 항목이 추가되었습니다.");
   }
 
   // 장바구니 항목 삭제
-  @DeleteMapping("/{memberId}/{productId}")
-  public ResponseEntity<String> removeCartItem(@PathVariable Long memberId, @PathVariable Long productId) {
-    cartService.removeCartItem(memberId, productId);
-    log.info("회원 ID {}의 장바구니에서 제품 ID {} 삭제", memberId, productId);
+  @DeleteMapping("/{memberId}/delete/{productId}/{portion}")
+  public ResponseEntity<String> removeCartItem(@PathVariable Long memberId, @PathVariable Long productId, @PathVariable MealPortion portion) {
+    cartService.removeCartItem(memberId, productId, portion);
+    log.info("회원 ID {}의 장바구니에서 제품 ID {} {} 삭제", memberId, productId, portion.get());
     return ResponseEntity.ok("장바구니 항목이 삭제되었습니다.");
-  }
-
-  // 주문 완료 후 장바구니에서 항목 제거
-  @PostMapping("/{memberId}/complete-order")
-  public ResponseEntity<String> completeOrder(@PathVariable Long memberId, @RequestBody List<CartItemDTO> orderedItems) {
-    cartService.removeOrderedItems(memberId, orderedItems);
-    log.info("회원 ID {}의 주문 완료: 장바구니에서 주문된 항목 삭제", memberId);
-    return ResponseEntity.ok("주문이 완료되었으며, 장바구니가 업데이트되었습니다.");
   }
 }
