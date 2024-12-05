@@ -1,3 +1,7 @@
+.delivery-info td {
+  padding-bottom: 10px;
+}
+
 .hover-title:hover{
   color:#fe4923 !important;
 }

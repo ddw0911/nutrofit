@@ -51,10 +51,6 @@ window.initializePayment = async function() {
        // 결제창 초기화
        const payment = tossPayments.payment({ customerKey });
 
-       // 결제 금액 설정
-       const totalAmount = Number(sessionStorage.getItem('totalAmount'));
-       console.log("총 결제예정금액 :", totalAmount);
-
        // 결제 버튼 이벤트 리스너 설정
        payButton.addEventListener("click", async function() {
            try {
@@ -64,6 +60,9 @@ window.initializePayment = async function() {
                    alert("결제 내용을 확인하고 동의해 주세요.");
                    return;
                }
+
+               // 최신 총액을 가져옴
+               const currentTotalAmount = Number(sessionStorage.getItem('totalAmount'));
 
                // 회원 데이터 준비
                const memberData = getMemberData();
@@ -83,7 +82,7 @@ window.initializePayment = async function() {
                    method: "CARD",
                    amount: {
                        currency: 'KRW',
-                       value: totalAmount,
+                       value: currentTotalAmount, // 업데이트된 금액 사용
                    },
                    orderId: orderId,
                    orderName: orderName,

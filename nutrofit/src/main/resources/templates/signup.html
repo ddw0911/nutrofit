@@ -54,60 +54,16 @@
 <body>
 
 <!-- GNB -->
+<!-- GNB -->
 <header class="py-lg-5 py-4 px-0 border-bottom border-bottom-lg-0 gnb">
   <div class="container-fluid">
-    <div class="row w-100 align-items-center g-0 gx-lg-3 gnb-fixed">
-      <div class="col-xxl-9 col-lg-8">
-        <div class="d-flex align-items-center gnb-logo">
-          <a class="navbar-brand d-none d-lg-block" th:href="@{/}">
-            <img th:src="@{/assets/images/logo/nutrofit-logo-leg-nobg.png}"
-                 alt="eCommerce HTML Template"
-                 style="width: 75%; height: auto; margin-left: 4rem;">
-          </a>
-        </div>
-      </div>
-      <div class="col-xxl-3 col-lg-4 d-flex align-items-center gnb-right">
-        <!-- 정기구독 버튼 -->
-        <span class="gnb-btn"><button type="submit"><a th:href="@{/subscribe}"
-                                                       style="color: black;">정기구독</a></button></span>
-        <!-- 회원가입버튼 -->
-        <span class="gnb-btn"><button type="button"><a th:href="@{/signup}"
-                                                       style="color: black;">회원가입</a></button></span>
-        <div class="list-inline ms-auto d-lg-block d-none gnb-icons">
-          <div class="list-inline-item">
-            <a th:href="@{/signin}" class="text-muted">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
-                   fill="none"
-                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                   stroke-linejoin="round"
-                   class="feather feather-user">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </a>
-          </div>
-          <div class="list-inline-item" style="margin-inline: 20px 20px;">
-            <a class="text-muted position-relative " data-bs-toggle="offcanvas"
-               data-bs-target="#offcanvasRight"
-               href="#offcanvasExample" role="button" aria-controls="offcanvasRight">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
-                   fill="none"
-                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                   stroke-linejoin="round"
-                   class="feather feather-shopping-bag">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <path d="M16 10a4 4 0 0 1-8 0"></path>
-              </svg>
-              <span
-                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
-                  style="background-color: #FE4923 !important;">
-                    2
-                    <span class="visually-hidden">itemCount</span>
-                    </span>
-            </a>
-          </div>
-        </div>
+    <div class="row w-100 align-items-center g-0 gx-lg-3">
+      <div class="d-flex align-items-center gnb-logo">
+        <a class="navbar-brand d-none d-lg-block" th:href="@{/}">
+          <img th:src="@{/assets/images/logo/nutrofit-logo-leg-nobg.png}"
+               alt="eCommerce HTML Template"
+               style="width: 75%; height: auto; margin-left: 4rem;">
+        </a>
       </div>
     </div>
   </div>
@@ -615,8 +571,7 @@
   <script th:src="@{/assets/js/vendors/increment-value.js}"></script>
   <script th:src="@{/assets/js/vendors/nutrofit-main.js}"></script>
   <script th:src="@{/assets/js/vendors/nutrofit-signup.js}"></script>
-
-
+</main>
 </body>
 
 </html>

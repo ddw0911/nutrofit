@@ -44,30 +44,45 @@ const cartManager = {
   },
 
   // 상품 추가
+  // cartManager의 addItem 메서드 수정 (첫 번째 파일)
   addItem(product) {
-    console.log(product);
-    const cart = this.getCart();
-    console.log(cart);
+      console.log('Adding product:', product);
+      const cart = this.getCart();
 
-    const quantity = parseInt(document.querySelector('.quantity-field').value) || 1;
-    const selectedPortion = document.querySelector('.portion-btn.active')?.textContent || '1인분';
+      if (!product) {
+          console.error('상품 정보가 없습니다.');
+          return;
+      }
 
-    const existingItemIndex = cart.findIndex(
-        item => item.id === product.id && item.selectedPortion === selectedPortion
-    );
+      const quantity = product.fromQuickAdd ? 1 : parseInt(product.quantity) || 1;
+      const selectedPortion = product.fromQuickAdd ? '1인분' : product.selectedPortion || '1인분';
 
-    if (existingItemIndex !== -1) {
-        cart[existingItemIndex].quantity += quantity;
-    } else {
-        cart.push({
-            ...product,
-            quantity: quantity,
-            selectedPortion: selectedPortion
-        });
-    }
+      const existingItemIndex = cart.findIndex(
+          item => item.id === product.id && item.selectedPortion === selectedPortion
+      );
 
-    this.saveCart(cart);
-    this.showCartMessage();
+      if (existingItemIndex !== -1) {
+          if (product.fromQuickAdd) {
+              // Quick Add의 경우 수량 1 증가
+              cart[existingItemIndex].quantity = parseInt(cart[existingItemIndex].quantity) + 1;
+          } else {
+              // 상세 모달에서 추가하는 경우 새로운 수량으로 교체
+              cart[existingItemIndex].quantity = quantity;
+          }
+      } else {
+          cart.push({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              image: product.image || product.imageUrl?.[0],
+              quantity: quantity,
+              selectedPortion: selectedPortion
+          });
+      }
+
+      console.log('Updated cart:', cart);
+      this.saveCart(cart);
+      this.showCartMessage();
   },
 
   // 장바구니 아이콘 숫자 업데이트
@@ -381,10 +396,19 @@ function quickAddToCart(button) {
 
 // 장바구니 담기 버튼 클릭 이벤트 핸들러
 function addToCart() {
-  const product = {
-    ...window.currentProduct
-  };
-  cartManager.addItem(product);
+    const quantityField = document.querySelector('.quantity-field');
+    const currentQuantity = parseInt(quantityField.value) || 1;
+    const selectedPortion = document.querySelector('.portion-btn.active')?.textContent || '1인분';
+
+    if (window.currentProduct) {
+        const product = {
+            ...window.currentProduct,
+            quantity: currentQuantity,    // 현재 입력된 수량 사용
+            selectedPortion: selectedPortion  // 현재 선택된 인분 사용
+        };
+        console.log('장바구니 담기 전 product:', product);  // 디버깅용
+        cartManager.addItem(product);
+    }
 }
 
 // 장바구니 열릴 때 UI 업데이트
@@ -397,6 +421,30 @@ document.addEventListener('DOMContentLoaded', () => {
   cartManager.updateCartCount();
 });
 
+function handleQuantityChange(event) {
+    const modal = document.getElementById('quickViewModal');
+    const quantityDisplay = modal.querySelector('.quantity-field');
+    let quantity = parseInt(quantityDisplay.value) || 1;
+
+    if (event.target.classList.contains('button-plus')) {
+        if (quantity < 10) {
+            quantity++;
+        }
+    } else if (event.target.classList.contains('button-minus')) {
+        if (quantity > 1) {
+            quantity--;
+        }
+    }
+
+    quantityDisplay.value = quantity;
+
+    if (window.currentProduct) {
+        window.currentProduct.quantity = quantity;  // 수량 변경 시마다 업데이트
+        console.log('수량 변경:', window.currentProduct);  // 디버깅용
+    }
+
+    updateTotalPrice();
+}
 
 
 // 모달이 닫힐 때 데이터 초기화
@@ -404,23 +452,27 @@ document.getElementById('quickViewModal').addEventListener('hidden.bs.modal', ()
   console.log('모달 종료: 모든 데이터 초기화');
 
   const backdrop = document.querySelector('.modal-backdrop');
-      if (backdrop) {
-          backdrop.parentNode.removeChild(backdrop);
-      }
+  if (backdrop) {
+    backdrop.parentNode.removeChild(backdrop);
+  }
 
   document.body.classList.remove('modal-open');
   document.body.style.overflow = '';
   document.body.style.paddingRight = '';
 
-  window.currentProduct = null;
-
+  // window.currentProduct 초기화를 마지막에 수행
   const quantityInput = document.querySelector('.quantity-field');
   quantityInput.value = 1;
 
   document.querySelectorAll('.portion-btn').forEach(button => button.classList.remove('active'));
-  window.currentProduct.selectedPortion = '1인분';
+
+  if (window.currentProduct) {
+    window.currentProduct.selectedPortion = '1인분';
+    window.currentProduct.quantity = 1;
+  }
 
   updateTotalPrice();
+  window.currentProduct = null;  // 모든 작업이 끝난 후 null로 설정
 });
 
 // 주문하러 가기 버튼 클릭 시

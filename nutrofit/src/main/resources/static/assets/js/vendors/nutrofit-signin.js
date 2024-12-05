@@ -1,20 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 페이지 로드 시 Local Storage 에서 아이디를 가져와 입력란에 채움
+    // 페이지 로드 시 Local Storage에서 아이디와 체크박스 상태를 가져옴
     const savedId = localStorage.getItem("memberId");
-    if (savedId) {
+    const isChecked = localStorage.getItem("rememberIdChecked") === "true";
+
+    if (savedId && isChecked) {
         document.getElementById("userId").value = savedId;
-        document.getElementById("rememberIdCheckbox").checked = true;
+        document.getElementById("rememberIdCheckbox").checked = isChecked;
     }
 
-    // 로그인 폼 제출 시, 체크박스 상태에 따라 아이디 저장
+    // 체크박스 상태 변경 시 즉시 저장
+    document.getElementById("rememberIdCheckbox").addEventListener("change", function() {
+        const rememberId = this.checked;
+        const memberId = document.getElementById("userId").value;
+
+        if (rememberId) {
+            localStorage.setItem("memberId", memberId);
+            localStorage.setItem("rememberIdChecked", "true");
+        } else {
+            localStorage.removeItem("memberId");
+            localStorage.removeItem("rememberIdChecked");
+        }
+    });
+
+    // 로그인 폼 제출 시
     document.querySelector("form").addEventListener("submit", function () {
         const rememberId = document.getElementById("rememberIdCheckbox").checked;
         const memberId = document.getElementById("userId").value;
 
         if (rememberId) {
-            localStorage.setItem("memberId", memberId); // Local Storage에 아이디 저장
-        } else {
-            localStorage.removeItem("memberId"); // 체크 해제 시 아이디 삭제
+            localStorage.setItem("memberId", memberId); // 아이디 업데이트
         }
     });
 });
